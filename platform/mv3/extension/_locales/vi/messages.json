@@ -287,6 +287,14 @@
     "message": "Khi được kích hoạt, các bộ lọc phù hợp sẽ tự động đóng các tab trình duyệt không mong muốn do các trang web tạo ra.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enableAntiAdblockLabel": {
+    "message": "Vô hiệu hoá script chống chặn quảng cáo",
+    "description": "Settings: label for the generic anti-adblock defuser"
+  },
+  "enableAntiAdblockLegend": {
+    "message": "Tiêm một hook vào mọi trang mà bạn đã cấp quyền, khiến các trang đo đạc khung quảng cáo bị ẩn không phát hiện được là nội dung đang bị chặn. Cần quyền truy cập tất cả trang web.",
+    "description": "Settings: legend for the generic anti-adblock defuser"
+  },
   "sandboxEditorLabel": {
     "message": "Hộp thử nghiệm tạo bộ lọc",
     "description": "Header for filter-creation section in the dashboard"

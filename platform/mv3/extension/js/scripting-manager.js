@@ -34,6 +34,7 @@ import { getEnabledRulesetsDetails } from './ruleset-manager.js';
 import { getFilteringModeDetails } from './mode-manager.js';
 import { registerCustomFilters } from './filter-manager.js';
 import { registerJob } from './alarms.js';
+import { registerAntiAdblock } from './anti-adblock.js';
 import { registerPreventPopup } from './prevent-popup.js';
 import { registerToolbarIconToggler } from './action.js';
 
@@ -340,6 +341,7 @@ registerContentScripts.register = async function register() {
         registerGeneric(context, genericDetails),
         registerCustomFilters(context),
         registerPreventPopup(context),
+        registerAntiAdblock(context),
         registerToolbarIconToggler(context),
     ]);
 

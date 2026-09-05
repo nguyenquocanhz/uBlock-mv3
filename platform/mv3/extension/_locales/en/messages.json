@@ -287,6 +287,14 @@
     "message": "When active, matching filters will automatically close unwanted browser tabs created by websites.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enableAntiAdblockLabel": {
+    "message": "Defuse anti-adblock scripts",
+    "description": "Settings: label for the generic anti-adblock defuser"
+  },
+  "enableAntiAdblockLegend": {
+    "message": "Injects a hook on every site you granted permissions for, so pages which measure hidden ad slots cannot tell that content is being blocked. Requires access to all sites.",
+    "description": "Settings: legend for the generic anti-adblock defuser"
+  },
   "sandboxEditorLabel": {
     "message": "Filter-creation sandbox",
     "description": "Header for filter-creation section in the dashboard"

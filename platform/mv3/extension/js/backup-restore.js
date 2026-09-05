@@ -53,6 +53,9 @@ export async function backupToObject(currentConfig) {
     if ( currentConfig.popupBlockMode !== defaultConfig.popupBlockMode ) {
         out.popupBlockMode = currentConfig.popupBlockMode;
     }
+    if ( currentConfig.antiAdblockMode !== defaultConfig.antiAdblockMode ) {
+        out.antiAdblockMode = currentConfig.antiAdblockMode;
+    }
     if ( currentConfig.showBlockedCount !== defaultConfig.showBlockedCount ) {
         out.showBlockedCount = currentConfig.showBlockedCount;
     }
@@ -115,6 +118,11 @@ export async function restoreFromObject(targetConfig) {
     await sendMessage({
         what: 'setPopupBlockMode',
         state: targetConfig.popupBlockMode ?? defaultConfig.popupBlockMode
+    });
+
+    await sendMessage({
+        what: 'setAntiAdblockMode',
+        state: targetConfig.antiAdblockMode ?? defaultConfig.antiAdblockMode
     });
 
     const enabledRulesets = defaultConfig.rulesets;

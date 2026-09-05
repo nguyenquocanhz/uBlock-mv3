@@ -70,6 +70,13 @@ function renderWidgets() {
     }
 
     {
+        const input = qs$('#antiAdblockMode input[type="checkbox"]');
+        const canDefuse = data.hasOmnipotence;
+        input.checked = canDefuse && data.antiAdblockMode;
+        dom.attr(input, 'disabled', canDefuse ? null : '');
+    }
+
+    {
         const state = Boolean(data.developerMode) &&
             data.disabledFeatures?.includes('develop') !== true;
         dom.body.dataset.develop = `${state}`;
@@ -221,6 +228,13 @@ dom.on('#popupBlockMode input[type="checkbox"]', 'change', ev => {
     });
 });
 
+dom.on('#antiAdblockMode input[type="checkbox"]', 'change', ev => {
+    sendMessage({
+        what: 'setAntiAdblockMode',
+        state: ev.target.checked,
+    });
+});
+
 dom.on('#developerMode input[type="checkbox"]', 'change', ev => {
     const state = ev.target.checked;
     sendMessage({ what: 'setDeveloperMode', state });
@@ -291,6 +305,13 @@ listen.onmessage = ev => {
     if ( message.popupBlockMode !== undefined ) {
         if ( message.popupBlockMode !== local.popupBlockMode ) {
             local.popupBlockMode = message.popupBlockMode;
+            render = true;
+        }
+    }
+
+    if ( message.antiAdblockMode !== undefined ) {
+        if ( message.antiAdblockMode !== local.antiAdblockMode ) {
+            local.antiAdblockMode = message.antiAdblockMode;
             render = true;
         }
     }
