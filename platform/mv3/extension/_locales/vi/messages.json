@@ -43,6 +43,10 @@
     "message": "chế độ lọc",
     "description": "Label in the popup panel for the current filtering mode"
   },
+  "popupNoFilteringDescription": {
+    "message": "Không lọc gì trên trang web này.",
+    "description": "Popup: one-line summary of the \"no filtering\" mode"
+  },
   "popupLocalToolsLabel": {
     "message": "Trên trang web này",
     "description": "Label in the popup panel for the local tools section"
@@ -263,6 +267,14 @@
     "message": "Hành vi",
     "description": "The header text for the 'Behavior' section"
   },
+  "behaviorBlockingGroupLabel": {
+    "message": "Chặn",
+    "description": "Settings: subheading for options controlling what gets blocked"
+  },
+  "behaviorInterfaceGroupLabel": {
+    "message": "Giao diện",
+    "description": "Settings: subheading for options controlling the extension UI"
+  },
   "autoReloadLabel": {
     "message": "Tự động tải lại trang khi thay đổi chế độ bộ lọc",
     "description": "Label for a checkbox in the options page"
@@ -286,6 +298,14 @@
   "enablePopupBlockLegend": {
     "message": "Khi được kích hoạt, các bộ lọc phù hợp sẽ tự động đóng các tab trình duyệt không mong muốn do các trang web tạo ra.",
     "description": "Short description for a checkbox in the options page"
+  },
+  "enableAntiAdblockLabel": {
+    "message": "Vô hiệu hoá script chống chặn quảng cáo",
+    "description": "Settings: label for the generic anti-adblock defuser"
+  },
+  "enableAntiAdblockLegend": {
+    "message": "Tiêm một hook vào mọi trang mà bạn đã cấp quyền, khiến các trang đo đạc khung quảng cáo bị ẩn không phát hiện được là nội dung đang bị chặn. Cần quyền truy cập tất cả trang web.",
+    "description": "Settings: legend for the generic anti-adblock defuser"
   },
   "sandboxEditorLabel": {
     "message": "Hộp thử nghiệm tạo bộ lọc",

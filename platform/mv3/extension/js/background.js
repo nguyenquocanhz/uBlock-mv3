@@ -131,6 +131,7 @@ import {
 } from './compiled-filters.js';
 
 import { dnr } from './ext-compat.js';
+import { setAntiAdblockMode } from './anti-adblock.js';
 import { setPopupBlockMode } from './prevent-popup.js';
 import { supportsOffscreenDocument } from './ext-offscreen.js';
 import { toggleToolbarIcon } from './action.js';
@@ -374,6 +375,7 @@ async function onMessage(request, sender) {
             showBlockedCount: defaultConfig.showBlockedCount,
             strictBlockMode: defaultConfig.strictBlockMode,
             popupBlockMode: defaultConfig.popupBlockMode,
+            antiAdblockMode: defaultConfig.antiAdblockMode,
             rulesets,
             filteringModes: Object.assign(defaultFilteringModes),
         };
@@ -411,6 +413,7 @@ async function onMessage(request, sender) {
             canShowBlockedCount,
             strictBlockMode: rulesetConfig.strictBlockMode,
             popupBlockMode: rulesetConfig.popupBlockMode,
+            antiAdblockMode: rulesetConfig.antiAdblockMode,
             firstRun: process.firstRun,
             isSideloaded,
             developerMode: rulesetConfig.developerMode,
@@ -463,6 +466,12 @@ async function onMessage(request, sender) {
         await setPopupBlockMode(request.state);
         await registerContentScripts();
         broadcastMessage({ popupBlockMode: rulesetConfig.popupBlockMode });
+        return;
+
+    case 'setAntiAdblockMode':
+        await setAntiAdblockMode(request.state);
+        await registerContentScripts();
+        broadcastMessage({ antiAdblockMode: rulesetConfig.antiAdblockMode });
         return;
 
     case 'setDeveloperMode':

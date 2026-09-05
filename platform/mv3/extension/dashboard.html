@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="css/dashboard.css">
 
 <link rel="stylesheet" href="css/dashboard-common.css">
-<link rel="stylesheet" href="css/filtering-mode.css">
 <link rel="stylesheet" href="css/settings.css">
 <link rel="stylesheet" href="css/filter-editor.css">
 <link rel="stylesheet" href="css/develop.css">
@@ -49,29 +48,11 @@
                 <div>
                     <span><span class="input radio"><input type="radio" name="filteringMode" value="1"><svg viewBox="0 0 24 24"><path d="M 12 0 A 12 12 0 0 0 0 12 A 12 12 0 0 0 12 24 A 12 12 0 0 0 24 12 A 12 12 0 0 0 12 0 z M 12 2.5 A 9.5 9.5 0 0 1 21.5 12 A 9.5 9.5 0 0 1 12 21.5 A 9.5 9.5 0 0 1 2.5 12 A 9.5 9.5 0 0 1 12 2.5 z"/><circle cx="12" cy="12" r="7"/></svg></span><span data-i18n="filteringMode1Name">_</span></span>
                 </div>
-                <div>
-                    <div class="filteringModeSlider" data-level="1">
-                        <div class="filteringModeButton"><div></div></div>
-                        <span data-level="0"></span>
-                        <span data-level="1"></span>
-                        <span data-level="2"></span>
-                        <span data-level="3"></span>
-                    </div>
-                </div>
                 <div data-i18n="basicFilteringModeDescription"></div>
             </label>
             <label class="filteringModeCard">
                 <div>
                     <span><span class="input radio"><input type="radio" name="filteringMode" value="2"><svg viewBox="0 0 24 24"><path d="M 12 0 A 12 12 0 0 0 0 12 A 12 12 0 0 0 12 24 A 12 12 0 0 0 24 12 A 12 12 0 0 0 12 0 z M 12 2.5 A 9.5 9.5 0 0 1 21.5 12 A 9.5 9.5 0 0 1 12 21.5 A 9.5 9.5 0 0 1 2.5 12 A 9.5 9.5 0 0 1 12 2.5 z"/><circle cx="12" cy="12" r="7"/></svg></span><span data-i18n="filteringMode2Name">_</span></span>
-                </div>
-                <div>
-                    <div class="filteringModeSlider" data-level="2">
-                        <div class="filteringModeButton"><div></div></div>
-                        <span data-level="0"></span>
-                        <span data-level="1"></span>
-                        <span data-level="2"></span>
-                        <span data-level="3"></span>
-                    </div>
                 </div>
                 <div data-i18n="optimalFilteringModeDescription"></div>
             </label>
@@ -79,27 +60,26 @@
                 <div>
                     <span><span class="input radio"><input type="radio" name="filteringMode" value="3"><svg viewBox="0 0 24 24"><path d="M 12 0 A 12 12 0 0 0 0 12 A 12 12 0 0 0 12 24 A 12 12 0 0 0 24 12 A 12 12 0 0 0 12 0 z M 12 2.5 A 9.5 9.5 0 0 1 21.5 12 A 9.5 9.5 0 0 1 12 21.5 A 9.5 9.5 0 0 1 2.5 12 A 9.5 9.5 0 0 1 12 2.5 z"/><circle cx="12" cy="12" r="7"/></svg></span><span data-i18n="filteringMode3Name">_</span></span>
                 </div>
-                <div>
-                    <div class="filteringModeSlider" data-level="3">
-                        <div class="filteringModeButton"><div></div></div>
-                        <span data-level="0"></span>
-                        <span data-level="1"></span>
-                        <span data-level="2"></span>
-                        <span data-level="3"></span>
-                    </div>
-                </div>
                 <div data-i18n="completeFilteringModeDescription"></div>
             </label>
         </div>
     </div>
     <div>
         <h3 data-i18n="behaviorSectionLabel"></h3>
-        <p><label id="autoReload" data-i18n="autoReloadLabel"><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>_</label>
-        </p>
-        <p><label id="showBlockedCount" data-i18n="showBlockedCountLabel"><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>_</label>
-        <p data-platform-exclude="safari"><label id="strictBlockMode" data-i18n="enableStrictBlockLabel"><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>_</label><legend data-i18n="enableStrictBlockLegend"></legend>
-        <p><label id="popupBlockMode" data-i18n="enablePopupBlockLabel"><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>_</label><legend data-i18n="enablePopupBlockLegend"></legend>
-        <p id="developerMode"><label data-i18n="developerModeLabel"><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>_</label><legend data-i18n="developerModeLegend"></legend>
+        <div class="settingsGroup">
+            <h4 data-i18n="behaviorBlockingGroupLabel"></h4>
+            <p data-platform-exclude="safari"><label id="strictBlockMode" data-i18n="enableStrictBlockLabel"><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>_</label><legend data-i18n="enableStrictBlockLegend"></legend>
+            <p><label id="popupBlockMode" data-i18n="enablePopupBlockLabel"><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>_</label><legend data-i18n="enablePopupBlockLegend"></legend>
+            <p><label id="antiAdblockMode" data-i18n="enableAntiAdblockLabel"><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>_</label><legend data-i18n="enableAntiAdblockLegend"></legend>
+        </div>
+        <div class="settingsGroup">
+            <h4 data-i18n="behaviorInterfaceGroupLabel"></h4>
+            <p><label id="autoReload" data-i18n="autoReloadLabel"><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>_</label>
+            <p><label id="showBlockedCount" data-i18n="showBlockedCountLabel"><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>_</label>
+        </div>
+        <div class="settingsGroup">
+            <p id="developerMode"><label data-i18n="developerModeLabel"><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>_</label><legend data-i18n="developerModeLegend"></legend>
+        </div>
     </div>
     <div>
         <h3 data-i18n="settingsBackupRestoreLabel">_</h3>

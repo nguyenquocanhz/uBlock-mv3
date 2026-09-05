@@ -20,7 +20,7 @@
 */
 
 import { browser, runtime, sendMessage } from './ext.js';
-import { dom, qs$ } from './dom.js';
+import { dom, qs$, qsa$ } from './dom.js';
 import { i18n$ } from './i18n.js';
 import punycode from './punycode.js';
 
@@ -42,15 +42,47 @@ function renderAdminRules() {
 
 const BLOCKING_MODE_MAX = 3;
 
-async function setFilteringMode(level, commit = false) {
-    const modeSlider = qs$('.filteringModeSlider');
-    modeSlider.dataset.level = level;
-    if ( qs$('.filteringModeSlider.moving') === null ) {
-        dom.text(
-            '#filteringModeText > span:nth-of-type(1)',
-            i18n$(`filteringMode${level}Name`)
-        );
+// The dashboard mode descriptions open with a one-sentence summary and then
+// spend further paragraphs on the permission implications. Only that opening
+// sentence fits the popup -- and reusing these keys means every locale already
+// has the text translated.
+const modeDescriptionKeys = [
+    'popupNoFilteringDescription',
+    'basicFilteringModeDescription',
+    'optimalFilteringModeDescription',
+    'completeFilteringModeDescription',
+];
+
+function modeDescription(level) {
+    const key = modeDescriptionKeys[level];
+    if ( key === undefined ) { return ''; }
+    return i18n$(key).split('\n')[0].trim();
+}
+
+function describeMode(level) {
+    dom.text('#filteringModeText > span', modeDescription(level));
+}
+
+function renderFilteringMode(level) {
+    const control = qs$('#filteringModeControl');
+    if ( control === null ) { return; }
+    control.dataset.level = level;
+    for ( const button of qsa$('.modeOption') ) {
+        const selected = parseInt(button.dataset.level, 10) === level;
+        dom.attr(button, 'aria-checked', `${selected}`);
+        // Roving tabindex: the group is one tab stop, arrows move within it.
+        dom.attr(button, 'tabindex', selected ? '0' : '-1');
     }
+    describeMode(level);
+}
+
+function committedLevel() {
+    const control = qs$('#filteringModeControl');
+    return parseInt(control.dataset.level, 10);
+}
+
+async function setFilteringMode(level, commit = false) {
+    renderFilteringMode(level);
     if ( commit !== true ) { return; }
     dom.cl.add(dom.body, 'busy');
     await commitFilteringMode();
@@ -60,9 +92,9 @@ async function setFilteringMode(level, commit = false) {
 async function commitFilteringMode() {
     if ( tabURL.hostname === '' ) { return; }
     const targetHostname = tabURL.hostname;
-    const modeSlider = qs$('.filteringModeSlider');
-    const afterLevel = parseInt(modeSlider.dataset.level, 10);
-    const beforeLevel = parseInt(modeSlider.dataset.levelBefore, 10);
+    const control = qs$('#filteringModeControl');
+    const afterLevel = parseInt(control.dataset.level, 10);
+    const beforeLevel = parseInt(control.dataset.levelBefore, 10);
     if ( afterLevel > 1 ) {
         if ( beforeLevel <= 1 ) {
             sendMessage({
@@ -82,21 +114,18 @@ async function commitFilteringMode() {
         } catch {
         }
         if ( granted !== true ) {
-            setFilteringMode(beforeLevel);
+            renderFilteringMode(beforeLevel);
             return;
         }
     }
-    dom.text(
-        '#filteringModeText > span:nth-of-type(1)',
-        i18n$(`filteringMode${afterLevel}Name`)
-    );
+    renderFilteringMode(afterLevel);
     const actualLevel = await sendMessage({
         what: 'setFilteringMode',
         hostname: targetHostname,
         level: afterLevel,
     });
     if ( actualLevel !== afterLevel ) {
-        setFilteringMode(actualLevel);
+        renderFilteringMode(actualLevel);
     }
     if ( actualLevel !== beforeLevel && popupPanelData.autoReload ) {
         const justReload = tabURL.href === currentTab.url;
@@ -110,107 +139,60 @@ async function commitFilteringMode() {
     }
 }
 
-{
-    let mx0 = 0;
-    let mx1 = 0;
-    let l0 = 0;
-    let lMax = 0;
-    let timer;
-
-    const move = ( ) => {
-        timer = undefined;
-        const l1 = Math.min(Math.max(l0 + mx1 - mx0, 0), lMax);
-        let level = Math.floor(l1 * BLOCKING_MODE_MAX / lMax);
-        if ( qs$('body[dir="rtl"]') !== null ) {
-            level = 3 - level;
-        }
-        const modeSlider = qs$('.filteringModeSlider');
-        if ( `${level}` === modeSlider.dataset.level ) { return; }
-        dom.text(
-            '#filteringModeText > span:nth-of-type(2)',
-            i18n$(`filteringMode${level}Name`)
-        );
-        setFilteringMode(level);
-    };
-
-    const moveAsync = ev => {
-        if ( timer !== undefined ) { return; }
-        mx1 = ev.pageX;
-        timer = self.requestAnimationFrame(move);
-    };
-
-    const stop = ev => {
-        if ( ev.button !== 0 ) { return; }
-        const modeSlider = qs$('.filteringModeSlider');
-        if ( dom.cl.has(modeSlider, 'moving') === false ) { return; }
-        dom.cl.remove(modeSlider, 'moving');
-        self.removeEventListener('mousemove', moveAsync, { capture: true });
-        self.removeEventListener('mouseup', stop, { capture: true });
-        dom.text('#filteringModeText > span:nth-of-type(2)', '');
-        commitFilteringMode();
-        ev.stopPropagation();
-        ev.preventDefault();
-        if ( timer !== undefined ) {
-            self.cancelAnimationFrame(timer);
-            timer = undefined;
-        }
-    };
-
-    const startSliding = ev => {
-        if ( ev.button !== 0 ) { return; }
-        const modeButton = qs$('.filteringModeButton');
-        if ( ev.currentTarget !== modeButton ) { return; }
-        const modeSlider = qs$('.filteringModeSlider');
-        if ( dom.cl.has(modeSlider, 'moving') ) { return; }
-        modeSlider.dataset.levelBefore = modeSlider.dataset.level;
-        mx0 = ev.pageX;
-        const buttonRect = modeButton.getBoundingClientRect();
-        l0 = buttonRect.left + buttonRect.width / 2;
-        const sliderRect = modeSlider.getBoundingClientRect();
-        lMax = sliderRect.width - buttonRect.width ;
-        dom.cl.add(modeSlider, 'moving');
-        self.addEventListener('mousemove', moveAsync, { capture: true });
-        self.addEventListener('mouseup', stop, { capture: true });
-        ev.stopPropagation();
-        ev.preventDefault();
-    };
-
-    dom.on('.filteringModeButton', 'mousedown', startSliding);
+function selectMode(level) {
+    if ( level < 0 || level > BLOCKING_MODE_MAX ) { return; }
+    const control = qs$('#filteringModeControl');
+    if ( `${level}` === control.dataset.level ) { return; }
+    control.dataset.levelBefore = control.dataset.level;
+    setFilteringMode(level, true);
 }
 
-dom.on(
-    '.filteringModeSlider',
-    'click',
-    '.filteringModeSlider span[data-level]',
-    ev => {
-        const modeSlider = qs$('.filteringModeSlider');
-        modeSlider.dataset.levelBefore = modeSlider.dataset.level;
-        const span = ev.target;
-        const level = parseInt(span.dataset.level, 10);
-        setFilteringMode(level, true);
+dom.on('#filteringModeControl', 'click', '.modeOption', ev => {
+    selectMode(parseInt(ev.target.dataset.level, 10));
+});
+
+// Radiogroup keyboard semantics: arrows move and commit, Home/End jump to the
+// ends. The old slider could not be operated from the keyboard at all.
+dom.on('#filteringModeControl', 'keydown', ev => {
+    const rtl = dom.attr(dom.body, 'dir') === 'rtl';
+    let level;
+    switch ( ev.key ) {
+    case 'ArrowUp':
+        level = committedLevel() - 1;
+        break;
+    case 'ArrowDown':
+        level = committedLevel() + 1;
+        break;
+    case 'ArrowLeft':
+        level = committedLevel() + (rtl ? 1 : -1);
+        break;
+    case 'ArrowRight':
+        level = committedLevel() + (rtl ? -1 : 1);
+        break;
+    case 'Home':
+        level = 0;
+        break;
+    case 'End':
+        level = BLOCKING_MODE_MAX;
+        break;
+    default:
+        return;
     }
-);
+    if ( level < 0 || level > BLOCKING_MODE_MAX ) { return; }
+    ev.preventDefault();
+    selectMode(level);
+    qs$(`.modeOption[data-level="${level}"]`).focus();
+});
 
+// Preview the description of whichever option is under the pointer, so the
+// choice can be understood before it is made.
 if ( dom.cl.has(dom.html, 'mobile') === false ) {
-    dom.on('.filteringModeSlider',
-        'mouseenter',
-        '.filteringModeSlider span[data-level]',
-        ev => {
-            const span = ev.target;
-            const level = parseInt(span.dataset.level, 10);
-            dom.text('#filteringModeText > span:nth-of-type(2)',
-                i18n$(`filteringMode${level}Name`)
-            );
-        }
-    );
-
-    dom.on('.filteringModeSlider',
-        'mouseleave',
-        '.filteringModeSlider span[data-level]',
-        ( ) => {
-            dom.text('#filteringModeText > span:nth-of-type(2)', '');
-        }
-    );
+    dom.on('#filteringModeControl', 'mouseover', '.modeOption', ev => {
+        describeMode(parseInt(ev.target.dataset.level, 10));
+    });
+    dom.on('#filteringModeControl', 'mouseleave', ( ) => {
+        describeMode(committedLevel());
+    });
 }
 
 /******************************************************************************/
@@ -328,7 +310,7 @@ async function init() {
 
     renderAdminRules();
 
-    setFilteringMode(popupPanelData.level);
+    renderFilteringMode(popupPanelData.level);
 
     dom.text('#hostname', punycode.toUnicode(tabURL.hostname));
 

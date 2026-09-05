@@ -43,6 +43,10 @@
     "message": "filtering mode",
     "description": "Label in the popup panel for the current filtering mode"
   },
+  "popupNoFilteringDescription": {
+    "message": "No filtering on this website.",
+    "description": "Popup: one-line summary of the \"no filtering\" mode"
+  },
   "popupLocalToolsLabel": {
     "message": "On this website",
     "description": "Label in the popup panel for the local tools section"
@@ -263,6 +267,14 @@
     "message": "Behavior",
     "description": "The header text for the 'Behavior' section"
   },
+  "behaviorBlockingGroupLabel": {
+    "message": "Blocking",
+    "description": "Settings: subheading for options controlling what gets blocked"
+  },
+  "behaviorInterfaceGroupLabel": {
+    "message": "Interface",
+    "description": "Settings: subheading for options controlling the extension UI"
+  },
   "autoReloadLabel": {
     "message": "Automatically reload page when changing filtering mode",
     "description": "Label for a checkbox in the options page"
@@ -286,6 +298,14 @@
   "enablePopupBlockLegend": {
     "message": "When active, matching filters will automatically close unwanted browser tabs created by websites.",
     "description": "Short description for a checkbox in the options page"
+  },
+  "enableAntiAdblockLabel": {
+    "message": "Defuse anti-adblock scripts",
+    "description": "Settings: label for the generic anti-adblock defuser"
+  },
+  "enableAntiAdblockLegend": {
+    "message": "Injects a hook on every site you granted permissions for, so pages which measure hidden ad slots cannot tell that content is being blocked. Requires access to all sites.",
+    "description": "Settings: legend for the generic anti-adblock defuser"
   },
   "sandboxEditorLabel": {
     "message": "Filter-creation sandbox",
