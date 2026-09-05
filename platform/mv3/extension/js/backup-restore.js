@@ -56,6 +56,9 @@ export async function backupToObject(currentConfig) {
     if ( currentConfig.antiAdblockMode !== defaultConfig.antiAdblockMode ) {
         out.antiAdblockMode = currentConfig.antiAdblockMode;
     }
+    if ( currentConfig.dismissWallMode !== defaultConfig.dismissWallMode ) {
+        out.dismissWallMode = currentConfig.dismissWallMode;
+    }
     if ( currentConfig.antiDevtoolsMode !== defaultConfig.antiDevtoolsMode ) {
         out.antiDevtoolsMode = currentConfig.antiDevtoolsMode;
     }
@@ -129,6 +132,11 @@ export async function restoreFromObject(targetConfig) {
     await sendMessage({
         what: 'setAntiAdblockMode',
         state: targetConfig.antiAdblockMode ?? defaultConfig.antiAdblockMode
+    });
+
+    await sendMessage({
+        what: 'setDismissWallMode',
+        state: targetConfig.dismissWallMode ?? defaultConfig.dismissWallMode
     });
 
     await sendMessage({

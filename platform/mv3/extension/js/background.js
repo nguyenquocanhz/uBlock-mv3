@@ -143,7 +143,7 @@ import {
 } from './stats.js';
 
 import { setAntiAdblockMode } from './anti-adblock.js';
-import { setAntiDevtoolsMode, setUnlockInteractionMode } from './page-tools.js';
+import { setAntiDevtoolsMode, setDismissWallMode, setUnlockInteractionMode } from './page-tools.js';
 import { setPopupBlockMode } from './prevent-popup.js';
 import { supportsOffscreenDocument } from './ext-offscreen.js';
 import { toggleToolbarIcon } from './action.js';
@@ -389,6 +389,7 @@ async function onMessage(request, sender) {
             popupBlockMode: defaultConfig.popupBlockMode,
             antiAdblockMode: defaultConfig.antiAdblockMode,
             antiDevtoolsMode: defaultConfig.antiDevtoolsMode,
+            dismissWallMode: defaultConfig.dismissWallMode,
             unlockInteractionMode: defaultConfig.unlockInteractionMode,
             rulesets,
             filteringModes: Object.assign(defaultFilteringModes),
@@ -429,6 +430,7 @@ async function onMessage(request, sender) {
             popupBlockMode: rulesetConfig.popupBlockMode,
             antiAdblockMode: rulesetConfig.antiAdblockMode,
             antiDevtoolsMode: rulesetConfig.antiDevtoolsMode,
+            dismissWallMode: rulesetConfig.dismissWallMode,
             unlockInteractionMode: rulesetConfig.unlockInteractionMode,
             firstRun: process.firstRun,
             isSideloaded,
@@ -488,6 +490,12 @@ async function onMessage(request, sender) {
         await setAntiDevtoolsMode(request.state);
         await registerContentScripts();
         broadcastMessage({ antiDevtoolsMode: rulesetConfig.antiDevtoolsMode });
+        return;
+
+    case 'setDismissWallMode':
+        await setDismissWallMode(request.state);
+        await registerContentScripts();
+        broadcastMessage({ dismissWallMode: rulesetConfig.dismissWallMode });
         return;
 
     case 'setUnlockInteractionMode':

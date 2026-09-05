@@ -359,6 +359,14 @@
     "message": "Tiêm một hook vào mọi trang mà bạn đã cấp quyền, khiến các trang đo đạc khung quảng cáo bị ẩn không phát hiện được là nội dung đang bị chặn. Cần quyền truy cập tất cả trang web.",
     "description": "Settings: legend for the generic anti-adblock defuser"
   },
+  "enableDismissWallLabel": {
+    "message": "Gỡ thông báo đòi tắt trình chặn quảng cáo",
+    "description": "Settings: label for the adblock-wall dismisser"
+  },
+  "enableDismissWallLegend": {
+    "message": "Ẩn lớp phủ đòi bạn tắt trình chặn quảng cáo, và trả lại thanh cuộn cho trang. Chỉ đụng vào lớp phủ mà nội dung chữ của chính nó nhắc đến trình chặn quảng cáo, nên banner cookie, tường phí và hộp đăng nhập không bị ảnh hưởng.",
+    "description": "Settings: legend for the adblock-wall dismisser"
+  },
   "enableAntiDevtoolsLabel": {
     "message": "Vô hiệu hoá script chống công cụ nhà phát triển",
     "description": "Settings: label for the anti-devtools defuser"

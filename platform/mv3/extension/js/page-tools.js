@@ -42,16 +42,16 @@ function targetsFor(filteringModeDetails) {
     return { matches: [ ...optimal, ...complete ], excludeMatches: [] };
 }
 
-function register(context, id, file) {
+function register(context, id, file, options = {}) {
     const { matches, excludeMatches } = targetsFor(context.filteringModeDetails);
     if ( matches.length === 0 ) { return; }
     const directive = {
         id,
         js: [ file ],
         matches: matchesFromHostnames(matches),
-        allFrames: true,
-        runAt: 'document_start',
-        world: 'MAIN',
+        allFrames: options.allFrames !== false,
+        runAt: options.runAt || 'document_start',
+        world: options.world || 'MAIN',
     };
     if ( excludeMatches.length !== 0 ) {
         directive.excludeMatches = matchesFromHostnames(excludeMatches);
@@ -72,6 +72,27 @@ export async function registerUnlockInteraction(context) {
 }
 
 /******************************************************************************/
+
+export async function registerDismissWall(context) {
+    if ( rulesetConfig.dismissWallMode !== true ) { return; }
+    // ISOLATED world: this only reads and hides DOM nodes, so it has no need
+    // of the page's realm. Top frame only -- a wall covers the page the
+    // reader is looking at, not an ad iframe inside it.
+    register(context, 'dismiss-wall', '/js/scripting/dismiss-wall.js', {
+        world: 'ISOLATED',
+        runAt: 'document_end',
+        allFrames: false,
+    });
+}
+
+/******************************************************************************/
+
+export async function setDismissWallMode(state) {
+    const newState = Boolean(state);
+    if ( newState === rulesetConfig.dismissWallMode ) { return; }
+    rulesetConfig.dismissWallMode = newState;
+    await saveRulesetConfig();
+}
 
 export async function setAntiDevtoolsMode(state) {
     const newState = Boolean(state);

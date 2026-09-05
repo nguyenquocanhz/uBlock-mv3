@@ -37,6 +37,7 @@ export const rulesetConfig = {
     antiAdblockMode: true,
     antiDevtoolsMode: true,
     unlockInteractionMode: false,
+    dismissWallMode: true,
     developerMode: false,
     hasBroadHostPermissions: true,
 };

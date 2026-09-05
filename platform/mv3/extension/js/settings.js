@@ -77,7 +77,7 @@ function renderWidgets() {
         dom.attr(input, 'disabled', canDefuse ? null : '');
     }
 
-    for ( const id of [ 'antiDevtoolsMode', 'unlockInteractionMode' ] ) {
+    for ( const id of [ 'dismissWallMode', 'antiDevtoolsMode', 'unlockInteractionMode' ] ) {
         const input = qs$(`#${id} input[type="checkbox"]`);
         const usable = data.hasOmnipotence;
         input.checked = usable && data[id] === true;
@@ -245,6 +245,10 @@ dom.on('#antiAdblockMode input[type="checkbox"]', 'change', ev => {
     });
 });
 
+dom.on('#dismissWallMode input[type="checkbox"]', 'change', ev => {
+    sendMessage({ what: 'setDismissWallMode', state: ev.target.checked });
+});
+
 dom.on('#antiDevtoolsMode input[type="checkbox"]', 'change', ev => {
     sendMessage({ what: 'setAntiDevtoolsMode', state: ev.target.checked });
 });
@@ -383,7 +387,7 @@ listen.onmessage = ev => {
         }
     }
 
-    for ( const key of [ 'antiDevtoolsMode', 'unlockInteractionMode' ] ) {
+    for ( const key of [ 'dismissWallMode', 'antiDevtoolsMode', 'unlockInteractionMode' ] ) {
         if ( message[key] === undefined ) { continue; }
         if ( message[key] === local[key] ) { continue; }
         local[key] = message[key];

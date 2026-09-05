@@ -359,6 +359,14 @@
     "message": "Injects a hook on every site you granted permissions for, so pages which measure hidden ad slots cannot tell that content is being blocked. Requires access to all sites.",
     "description": "Settings: legend for the generic anti-adblock defuser"
   },
+  "enableDismissWallLabel": {
+    "message": "Dismiss \"disable your ad blocker\" walls",
+    "description": "Settings: label for the adblock-wall dismisser"
+  },
+  "enableDismissWallLegend": {
+    "message": "Hides overlays that demand you turn off your ad blocker, and gives the page back its scrollbar. Only overlays whose own text asks about an ad blocker are touched, so cookie banners, paywalls and login dialogs are left alone.",
+    "description": "Settings: legend for the adblock-wall dismisser"
+  },
   "enableAntiDevtoolsLabel": {
     "message": "Defuse anti-developer-tools scripts",
     "description": "Settings: label for the anti-devtools defuser"
