@@ -170,8 +170,13 @@ tmp_manifest=$(mktemp)
 chmod '=rw' "$tmp_manifest"
 if [ -z "$TAGNAME" ]; then
     TAGNAME="$(jq -r .version "$UBOL_DIR"/manifest.json)"
-    # Enable DNR rule debugging
+    # Enable DNR rule debugging. The statistics declare the same permission
+    # as optional, and a manifest listing one permission in both lists is
+    # rejected, so it has to move rather than be added.
     jq '.permissions += ["declarativeNetRequestFeedback"]' \
+        "$UBOL_DIR/manifest.json" > "$tmp_manifest" \
+        && mv "$tmp_manifest" "$UBOL_DIR/manifest.json"
+    jq '.optional_permissions -= ["declarativeNetRequestFeedback"]' \
         "$UBOL_DIR/manifest.json" > "$tmp_manifest" \
         && mv "$tmp_manifest" "$UBOL_DIR/manifest.json"
     # Use a different extension id than the official one
