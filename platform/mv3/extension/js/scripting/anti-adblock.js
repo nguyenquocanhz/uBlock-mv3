@@ -382,15 +382,42 @@ try {
 // recognisably ad or tracker traffic, otherwise a page's genuine error
 // handling breaks.
 
-const adUrlRe = /(?:^|[./])(?:doubleclick|googlesyndication|googletagservices|googletagmanager|google-analytics|adservice\.google|amazon-adsystem|adnxs|adsrvr|criteo|taboola|outbrain|scorecardresearch|moatads|pubmatic|rubiconproject|openx|smartadserver|zedo|adroll|quantserve|sharethrough|teads|indexww|casalemedia)\.|\/(?:ads?|adv|adserver|advert(?:s|ising|isement)?|adsense|adsbygoogle|banners?|pagead|prebid|popunder|sponsors?)(?:[-._/?]|$)/i;
+// Which requests are ad traffic?
+//
+// Three tests, tried in order. The first is a curated list of ad networks --
+// unavoidably a list, in the same way filter lists are lists, and it has to
+// be kept current. The Vietnamese publishers are worth calling out: nearly
+// all of them run on admicro, whose loader sets `window.admerrorload` from
+// the script's own `onerror` and then falls back to an alternate CDN, so
+// missing that one host misses the whole detection chain on most of the
+// country's news sites.
+//
+// The second test catches hosts that name themselves, which generalises
+// past the list. It matches on whole labels so `admin.`, `adobe.` and
+// `addthis.` do not qualify.
+//
+// The third looks at the path, for first-party ad endpoints.
+
+const adNetworkRe = /(?:^|\.)(?:doubleclick|googlesyndication|googletagservices|googletagmanager|google-analytics|adservice\.google|fundingchoicesmessages\.google|amazon-adsystem|adnxs|adsrvr|criteo|taboola|outbrain|scorecardresearch|moatads|pubmatic|rubiconproject|openx|openxcdn|smartadserver|zedo|adroll|quantserve|sharethrough|teads|indexww|casalemedia|creativecdn|crwdcntrl|admicro|amcdn|eclick|dtadnetwork|adtima|ants|novanet)\.[a-z.]{2,8}$/i;
+
+const adHostLabelRe = /(?:^|\.)(?:ad|ads|adv|adx|adm|adserver|adservice|adsystem|adtech|adnet|adnetwork|pagead|pagead2|securepubads|pubads|banner|banners|prebid)(?:[.-]|$)/i;
+
+const adPathRe = /\/(?:ads?|adv|adserver|advert(?:s|ising|isement)?|adsense|adsbygoogle|banners?|pagead|prebid|popunder|sponsors?)(?:[-._/?]|$)/i;
 
 const isAdURL = url => {
     if ( typeof url !== 'string' || url === '' ) { return false; }
+    let hostname = '';
+    let pathname = url;
     try {
-        return adUrlRe.test(new URL(url, document.baseURI).href);
+        const parsed = new URL(url, document.baseURI);
+        hostname = parsed.hostname;
+        pathname = parsed.pathname + parsed.search;
     } catch {
-        return adUrlRe.test(url);
+        return adPathRe.test(url);
     }
+    if ( adNetworkRe.test(hostname) ) { return true; }
+    if ( adHostLabelRe.test(hostname) ) { return true; }
+    return adPathRe.test(pathname);
 };
 
 const isAdResourceElement = el => {
