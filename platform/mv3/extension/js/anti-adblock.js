@@ -49,12 +49,19 @@ export async function registerAntiAdblock(context) {
     }
     if ( matches.length === 0 ) { return; }
 
+    // No matchOriginAsFallback here, unlike the ruleset scriptlets. That
+    // option also targets about:blank, about:srcdoc and data: frames, and
+    // Chrome logs "Blocked script execution in 'about:blank' because the
+    // document's frame is sandboxed" for every sandboxed one it cannot
+    // inject into. The scriptlets can afford it because they match only the
+    // hostnames their filter lists name; this directive matches <all_urls>,
+    // so it would produce that error on most ad iframes on the web. The
+    // detection code this defuses runs in the top document anyway.
     const directive = {
         id: 'anti-adblock',
         js: [ '/js/scripting/anti-adblock.js' ],
         matches: matchesFromHostnames(matches),
         allFrames: true,
-        matchOriginAsFallback: true,
         runAt: 'document_start',
         world: 'MAIN',
     };
