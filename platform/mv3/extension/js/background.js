@@ -131,6 +131,17 @@ import {
 } from './compiled-filters.js';
 
 import { dnr } from './ext-compat.js';
+import {
+    dropStatsPermission,
+    forgetTab,
+    getOverallStats,
+    getTabStats,
+    hasStatsPermission,
+    requestStatsPermission,
+    resetStats,
+    startLiveCollection,
+} from './stats.js';
+
 import { setAntiAdblockMode } from './anti-adblock.js';
 import { setPopupBlockMode } from './prevent-popup.js';
 import { supportsOffscreenDocument } from './ext-offscreen.js';
@@ -467,6 +478,27 @@ async function onMessage(request, sender) {
         await registerContentScripts();
         broadcastMessage({ popupBlockMode: rulesetConfig.popupBlockMode });
         return;
+
+    case 'getTabStats':
+        return getTabStats(request.tabId);
+
+    case 'getOverallStats':
+        return getOverallStats();
+
+    case 'enableStats': {
+        const granted = await requestStatsPermission();
+        broadcastMessage({ statsPermitted: granted });
+        return granted;
+    }
+
+    case 'disableStats': {
+        const dropped = await dropStatsPermission();
+        broadcastMessage({ statsPermitted: dropped === false });
+        return dropped;
+    }
+
+    case 'resetStats':
+        return resetStats();
 
     case 'setAntiAdblockMode':
         await setAntiAdblockMode(request.state);
@@ -849,6 +881,12 @@ async function start() {
     }
 
     toggleDeveloperMode(rulesetConfig.developerMode);
+
+    // Counting costs nothing when the permission was never granted -- the
+    // listener simply cannot be installed.
+    hasStatsPermission().then(granted => {
+        if ( granted ) { startLiveCollection(); }
+    });
 }
 
 /******************************************************************************/
@@ -887,6 +925,10 @@ if ( supportsUserScripts() && runtime.onUserScriptMessage ) {
         return true;
     });
 }
+
+browser.tabs.onRemoved.addListener(tabId => {
+    forgetTab(tabId);
+});
 
 browser.permissions.onRemoved.addListener((...args) => {
     isFullyInitialized.then(( ) => {

@@ -289,3 +289,48 @@ body.needReload #refresh {
 :root.desktop .tool:hover {
     background-color: var(--popup-toolbar-surface-hover);
 }
+
+/* Blocking statistics for the current page. Hidden entirely when the
+   permission has not been granted -- an empty panel reading zero would
+   claim nothing was blocked, which is not what "we cannot see" means. */
+#pageStats {
+    border-top: 1px solid var(--surface-2);
+    margin: 0 var(--popup-gap);
+    padding: var(--popup-gap-thin) 0;
+    text-align: center;
+}
+#pageStatsTotal {
+    align-items: baseline;
+    display: flex;
+    gap: 0.4em;
+    justify-content: center;
+}
+#pageStatsTotal .n {
+    color: var(--accent-surface-1);
+    font-size: 1.9em;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    line-height: 1.1;
+}
+#pageStatsTotal .lbl {
+    color: var(--ink-3);
+    font-size: 90%;
+}
+#pageStatsBreakdown {
+    color: var(--ink-3);
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 85%;
+    gap: 0.25em 1em;
+    justify-content: center;
+    margin-top: 0.35em;
+}
+#pageStatsBreakdown .stat {
+    display: inline-flex;
+    gap: 0.35em;
+}
+#pageStatsBreakdown .stat > b {
+    color: var(--ink-2);
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+}

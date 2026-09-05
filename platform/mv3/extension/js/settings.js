@@ -21,6 +21,7 @@
 
 import { browser, i18n, sendMessage } from './ext.js';
 import { dom, qs$ } from './dom.js';
+import { i18n$ } from './i18n.js';
 import { hashFromIterable } from './dashboard.js';
 import { renderFilterLists } from './filter-lists.js';
 
@@ -75,6 +76,8 @@ function renderWidgets() {
         input.checked = canDefuse && data.antiAdblockMode;
         dom.attr(input, 'disabled', canDefuse ? null : '');
     }
+
+    renderStats();
 
     {
         const state = Boolean(data.developerMode) &&
@@ -234,6 +237,55 @@ dom.on('#antiAdblockMode input[type="checkbox"]', 'change', ev => {
         state: ev.target.checked,
     });
 });
+
+dom.on('#statsEnabled input[type="checkbox"]', 'change', async ev => {
+    const want = ev.target.checked;
+    // Chrome only grants an optional permission from a user gesture, and it
+    // can be declined -- so the checkbox follows what actually happened, not
+    // what was clicked.
+    const ok = await sendMessage({ what: want ? 'enableStats' : 'disableStats' });
+    const granted = want ? ok === true : ok !== true;
+    ev.target.checked = granted;
+    renderStats();
+});
+
+dom.on('#statsReset', 'click', async ( ) => {
+    await sendMessage({ what: 'resetStats' });
+    renderStats();
+});
+
+const STAT_KEYS = [ 'ads', 'trackers', 'malware', 'annoyances', 'redirected', 'blocked' ];
+
+async function renderStats() {
+    const panel = qs$('#statsPanel');
+    if ( panel === null ) { return; }
+    const stats = await sendMessage({ what: 'getOverallStats' });
+    if ( stats instanceof Object === false ) { return; }
+    dom.prop('#statsEnabled input[type="checkbox"]', 'checked', stats.permitted === true);
+    if ( stats.permitted !== true ) {
+        dom.prop(panel, 'hidden', true);
+        return;
+    }
+    const grid = qs$('#statsGrid');
+    dom.clear(grid);
+    for ( const key of STAT_KEYS ) {
+        const cell = dom.create('div');
+        cell.className = 'stat';
+        const n = dom.create('span');
+        n.className = 'n';
+        n.textContent = (stats.totals[key] || 0).toLocaleString();
+        const lbl = dom.create('span');
+        lbl.className = 'lbl';
+        lbl.textContent = i18n$(`stats_${key}`);
+        cell.append(n, lbl);
+        grid.append(cell);
+    }
+    // Say which question these numbers answer. A published build cannot run
+    // the per-match listener, so its figures come from on-demand reads and
+    // are not running totals.
+    dom.text('#statsScope', i18n$(stats.live ? 'statsScopeLive' : 'statsScopeOnDemand'));
+    dom.prop(panel, 'hidden', false);
+}
 
 dom.on('#developerMode input[type="checkbox"]', 'change', ev => {
     const state = ev.target.checked;

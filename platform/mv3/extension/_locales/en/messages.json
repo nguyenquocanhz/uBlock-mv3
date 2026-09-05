@@ -275,6 +275,58 @@
     "message": "Interface",
     "description": "Settings: subheading for options controlling the extension UI"
   },
+  "statsSectionLabel": {
+    "message": "Blocking statistics",
+    "description": "Settings: header for the blocking statistics section"
+  },
+  "statsEnableLabel": {
+    "message": "Enable blocking statistics",
+    "description": "Settings: label for the statistics permission toggle"
+  },
+  "statsEnableLegend": {
+    "message": "Counting what was blocked requires permission to read which filter rules matched. Chrome describes this as reading your browsing history. Nothing is sent anywhere: the counts stay on this device.",
+    "description": "Settings: explains the permission the statistics need"
+  },
+  "statsResetButton": {
+    "message": "Reset counts",
+    "description": "Settings: button that clears the counters"
+  },
+  "statsBlockedOnPage": {
+    "message": "blocked on this page",
+    "description": "Popup: caption under the count for the current page"
+  },
+  "statsScopeLive": {
+    "message": "Running totals, counted as requests are blocked.",
+    "description": "Settings: note when running totals are available"
+  },
+  "statsScopeOnDemand": {
+    "message": "Your browser only reports blocked requests for pages that are still open, so these counts describe the current session rather than all time.",
+    "description": "Settings: note when only per-session counts are available"
+  },
+  "stats_ads": {
+    "message": "ads",
+    "description": "Statistics: label for the \"ads\" category"
+  },
+  "stats_trackers": {
+    "message": "trackers",
+    "description": "Statistics: label for the \"trackers\" category"
+  },
+  "stats_malware": {
+    "message": "malware",
+    "description": "Statistics: label for the \"malware\" category"
+  },
+  "stats_annoyances": {
+    "message": "annoyances",
+    "description": "Statistics: label for the \"annoyances\" category"
+  },
+  "stats_redirected": {
+    "message": "redirected",
+    "description": "Statistics: label for the \"redirected\" category"
+  },
+  "stats_blocked": {
+    "message": "blocked",
+    "description": "Statistics: label for the \"blocked\" category"
+  },
   "autoReloadLabel": {
     "message": "Automatically reload page when changing filtering mode",
     "description": "Label for a checkbox in the options page"

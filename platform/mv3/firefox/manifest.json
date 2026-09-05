@@ -55,6 +55,7 @@
     "<all_urls>"
   ],
   "optional_permissions": [
+    "declarativeNetRequestFeedback",
     "userScripts"
   ],
   "permissions": [

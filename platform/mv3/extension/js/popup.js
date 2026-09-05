@@ -326,7 +326,39 @@ async function init() {
 
     dom.cl.toggle('#gotoUnpicker', 'enabled', popupPanelData.hasCustomFilters);
 
+    renderPageStats();
+
     return true;
+}
+
+// Counts for the page in front of the user. Shown only when the optional
+// statistics permission is granted: with no permission we cannot see what
+// was blocked, and rendering zeros would assert that nothing was.
+async function renderPageStats() {
+    const panel = qs$('#pageStats');
+    if ( panel === null ) { return; }
+    if ( typeof currentTab.id !== 'number' ) { return; }
+    const stats = await sendMessage({ what: 'getTabStats', tabId: currentTab.id });
+    if ( stats instanceof Object === false ) { return; }
+    if ( stats.permitted !== true ) { return; }
+    const { totals } = stats;
+    const total = totals.blocked + totals.redirected;
+    dom.text('#pageStatsTotal .n', total.toLocaleString());
+    const breakdown = qs$('#pageStatsBreakdown');
+    dom.clear(breakdown);
+    for ( const key of [ 'ads', 'trackers', 'malware', 'annoyances', 'redirected' ] ) {
+        const n = totals[key] || 0;
+        if ( n === 0 ) { continue; }
+        const span = dom.create('span');
+        span.className = 'stat';
+        const b = dom.create('b');
+        b.textContent = n.toLocaleString();
+        const label = dom.create('span');
+        label.textContent = i18n$(`stats_${key}`);
+        span.append(b, label);
+        breakdown.append(span);
+    }
+    dom.prop(panel, 'hidden', false);
 }
 
 async function tryInit() {

@@ -436,3 +436,39 @@ body.busy section[data-pane="busy"] .fa-icon {
     font-size: 4em;
     margin: 2em;
 }
+/* Blocking statistics */
+#statsPanel {
+    margin-top: 0.75em;
+    }
+#statsGrid {
+    display: grid;
+    gap: 0.75em;
+    grid-template-columns: repeat(auto-fit, minmax(9em, 1fr));
+    max-width: 46em;
+    }
+#statsGrid .stat {
+    background-color: var(--surface-1);
+    border: 1px solid var(--surface-3);
+    border-radius: 6px;
+    padding: 0.6em 0.8em;
+    }
+#statsGrid .stat > .n {
+    color: var(--accent-surface-1);
+    display: block;
+    font-size: 1.6em;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    line-height: 1.2;
+    }
+#statsGrid .stat > .lbl {
+    color: var(--ink-3);
+    font-size: var(--font-size-smaller);
+    }
+.statsNote {
+    color: var(--ink-3);
+    font-size: var(--font-size-smaller);
+    max-width: 46em;
+    }
+.statsNote:empty {
+    display: none;
+    }

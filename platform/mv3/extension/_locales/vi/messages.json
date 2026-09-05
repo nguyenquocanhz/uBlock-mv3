@@ -275,6 +275,58 @@
     "message": "Giao diện",
     "description": "Settings: subheading for options controlling the extension UI"
   },
+  "statsSectionLabel": {
+    "message": "Thống kê chặn",
+    "description": "Settings: header for the blocking statistics section"
+  },
+  "statsEnableLabel": {
+    "message": "Bật thống kê chặn",
+    "description": "Settings: label for the statistics permission toggle"
+  },
+  "statsEnableLegend": {
+    "message": "Để đếm được những gì đã chặn cần quyền đọc xem filter rule nào đã khớp. Chrome mô tả quyền này là đọc lịch sử duyệt web. Không có gì được gửi đi đâu cả: số liệu nằm lại trên máy bạn.",
+    "description": "Settings: explains the permission the statistics need"
+  },
+  "statsResetButton": {
+    "message": "Đặt lại số đếm",
+    "description": "Settings: button that clears the counters"
+  },
+  "statsBlockedOnPage": {
+    "message": "đã chặn trên trang này",
+    "description": "Popup: caption under the count for the current page"
+  },
+  "statsScopeLive": {
+    "message": "Tổng cộng dồn, đếm ngay khi request bị chặn.",
+    "description": "Settings: note when running totals are available"
+  },
+  "statsScopeOnDemand": {
+    "message": "Trình duyệt chỉ báo request bị chặn cho các trang còn đang mở, nên số liệu này phản ánh phiên hiện tại chứ không phải toàn bộ thời gian.",
+    "description": "Settings: note when only per-session counts are available"
+  },
+  "stats_ads": {
+    "message": "quảng cáo",
+    "description": "Statistics: label for the \"ads\" category"
+  },
+  "stats_trackers": {
+    "message": "theo dõi",
+    "description": "Statistics: label for the \"trackers\" category"
+  },
+  "stats_malware": {
+    "message": "mã độc",
+    "description": "Statistics: label for the \"malware\" category"
+  },
+  "stats_annoyances": {
+    "message": "phiền nhiễu",
+    "description": "Statistics: label for the \"annoyances\" category"
+  },
+  "stats_redirected": {
+    "message": "chuyển hướng",
+    "description": "Statistics: label for the \"redirected\" category"
+  },
+  "stats_blocked": {
+    "message": "đã chặn",
+    "description": "Statistics: label for the \"blocked\" category"
+  },
   "autoReloadLabel": {
     "message": "Tự động tải lại trang khi thay đổi chế độ bộ lọc",
     "description": "Label for a checkbox in the options page"
