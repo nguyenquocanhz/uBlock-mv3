@@ -267,6 +267,14 @@
     "message": "Behavior",
     "description": "The header text for the 'Behavior' section"
   },
+  "behaviorBlockingGroupLabel": {
+    "message": "Blocking",
+    "description": "Settings: subheading for options controlling what gets blocked"
+  },
+  "behaviorInterfaceGroupLabel": {
+    "message": "Interface",
+    "description": "Settings: subheading for options controlling the extension UI"
+  },
   "autoReloadLabel": {
     "message": "Automatically reload page when changing filtering mode",
     "description": "Label for a checkbox in the options page"

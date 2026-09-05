@@ -7,10 +7,6 @@
     to { opacity: 1; }
     }
 
-:root {
-    --filtering-mode-button-size: 32px;
-    }
-
 body.loading {
     visibility: hidden;
     }
@@ -85,16 +81,30 @@ label:has(input[type="checkbox"][disabled]) + legend {
     padding: 0.5em;
     width: 100%;
     }
-.filteringModeCard > div:nth-of-type(2) {
-    justify-content: center;
-    }
-.filteringModeCard > div:nth-of-type(3) {
+.filteringModeCard > div:last-of-type {
     border-top: 1px solid var(--surface-2);
+    flex-grow: 1;
     font-size: var(--font-size-smaller);
     white-space: pre-line;
     }
-.filteringModeSlider {
-    pointer-events: none;
+
+/* Behaviour options read as one long undifferentiated list once there are
+   more than a handful. Group them by what they affect. A subheading whose
+   string a locale has not translated yet renders empty, so hide it and let
+   the grouping speak for itself. */
+.settingsGroup + .settingsGroup {
+    margin-top: 1.25em;
+    }
+.settingsGroup > h4 {
+    color: var(--ink-2);
+    font-size: var(--font-size-smaller);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin: 0 0 0.5em;
+    text-transform: uppercase;
+    }
+.settingsGroup > h4:empty {
+    display: none;
     }
 
 h3[data-i18n="filteringMode0Name"]::first-letter {
@@ -412,9 +422,6 @@ section[data-pane="filters"] aside#sandboxEditor .cm-scroller {
 @media (max-width: 480px) {
     #defaultFilteringMode {
         grid: 1fr 1fr 1fr / auto-flow dense;
-    }
-    .filteringModeCard > div:nth-of-type(2) {
-        justify-content: flex-start;
     }
 }
 

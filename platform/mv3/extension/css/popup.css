@@ -107,9 +107,7 @@ body[data-forbid~="dashboard"] .globalTools {
 
    The old slider showed four unlabelled bars and a draggable knob, so the
    only way to learn what a position meant was to move it and read the
-   caption underneath. Each level is now a button carrying its own name.
-   The dashboard still uses the slider as a static illustration of each
-   mode -- that is what filtering-mode.css remains for. */
+   caption underneath. Each level is now a button carrying its own name. */
 
 #filteringModeControl {
     align-self: stretch;
