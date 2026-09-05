@@ -56,6 +56,12 @@ export async function backupToObject(currentConfig) {
     if ( currentConfig.antiAdblockMode !== defaultConfig.antiAdblockMode ) {
         out.antiAdblockMode = currentConfig.antiAdblockMode;
     }
+    if ( currentConfig.antiDevtoolsMode !== defaultConfig.antiDevtoolsMode ) {
+        out.antiDevtoolsMode = currentConfig.antiDevtoolsMode;
+    }
+    if ( currentConfig.unlockInteractionMode !== defaultConfig.unlockInteractionMode ) {
+        out.unlockInteractionMode = currentConfig.unlockInteractionMode;
+    }
     if ( currentConfig.showBlockedCount !== defaultConfig.showBlockedCount ) {
         out.showBlockedCount = currentConfig.showBlockedCount;
     }
@@ -123,6 +129,16 @@ export async function restoreFromObject(targetConfig) {
     await sendMessage({
         what: 'setAntiAdblockMode',
         state: targetConfig.antiAdblockMode ?? defaultConfig.antiAdblockMode
+    });
+
+    await sendMessage({
+        what: 'setAntiDevtoolsMode',
+        state: targetConfig.antiDevtoolsMode ?? defaultConfig.antiDevtoolsMode
+    });
+
+    await sendMessage({
+        what: 'setUnlockInteractionMode',
+        state: targetConfig.unlockInteractionMode ?? defaultConfig.unlockInteractionMode
     });
 
     const enabledRulesets = defaultConfig.rulesets;

@@ -35,6 +35,7 @@ import { getFilteringModeDetails } from './mode-manager.js';
 import { registerCustomFilters } from './filter-manager.js';
 import { registerJob } from './alarms.js';
 import { registerAntiAdblock } from './anti-adblock.js';
+import { registerAntiDevtools, registerUnlockInteraction } from './page-tools.js';
 import { registerPreventPopup } from './prevent-popup.js';
 import { registerToolbarIconToggler } from './action.js';
 
@@ -342,6 +343,8 @@ registerContentScripts.register = async function register() {
         registerCustomFilters(context),
         registerPreventPopup(context),
         registerAntiAdblock(context),
+        registerAntiDevtools(context),
+        registerUnlockInteraction(context),
         registerToolbarIconToggler(context),
     ]);
 

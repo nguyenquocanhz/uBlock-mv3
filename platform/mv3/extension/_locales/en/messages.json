@@ -359,6 +359,22 @@
     "message": "Injects a hook on every site you granted permissions for, so pages which measure hidden ad slots cannot tell that content is being blocked. Requires access to all sites.",
     "description": "Settings: legend for the generic anti-adblock defuser"
   },
+  "enableAntiDevtoolsLabel": {
+    "message": "Defuse anti-developer-tools scripts",
+    "description": "Settings: label for the anti-devtools defuser"
+  },
+  "enableAntiDevtoolsLegend": {
+    "message": "Neutralises debugger traps that freeze the developer tools, and the window-size trick pages use to notice the tools are open. Note that Chrome never lets a page block F12, Ctrl+U or view-source: in the first place.",
+    "description": "Settings: legend for the anti-devtools defuser"
+  },
+  "enableUnlockInteractionLabel": {
+    "message": "Restore right-click, selection and copying",
+    "description": "Settings: label for restoring right-click and selection"
+  },
+  "enableUnlockInteractionLegend": {
+    "message": "Stops pages from taking away the context menu, text selection and copying. Off by default: preventing those is also how an application builds its own context menu or copy behaviour, so this can break sites that were behaving.",
+    "description": "Settings: legend for restoring right-click and selection"
+  },
   "sandboxEditorLabel": {
     "message": "Filter-creation sandbox",
     "description": "Header for filter-creation section in the dashboard"

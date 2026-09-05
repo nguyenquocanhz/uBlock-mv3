@@ -143,6 +143,7 @@ import {
 } from './stats.js';
 
 import { setAntiAdblockMode } from './anti-adblock.js';
+import { setAntiDevtoolsMode, setUnlockInteractionMode } from './page-tools.js';
 import { setPopupBlockMode } from './prevent-popup.js';
 import { supportsOffscreenDocument } from './ext-offscreen.js';
 import { toggleToolbarIcon } from './action.js';
@@ -387,6 +388,8 @@ async function onMessage(request, sender) {
             strictBlockMode: defaultConfig.strictBlockMode,
             popupBlockMode: defaultConfig.popupBlockMode,
             antiAdblockMode: defaultConfig.antiAdblockMode,
+            antiDevtoolsMode: defaultConfig.antiDevtoolsMode,
+            unlockInteractionMode: defaultConfig.unlockInteractionMode,
             rulesets,
             filteringModes: Object.assign(defaultFilteringModes),
         };
@@ -425,6 +428,8 @@ async function onMessage(request, sender) {
             strictBlockMode: rulesetConfig.strictBlockMode,
             popupBlockMode: rulesetConfig.popupBlockMode,
             antiAdblockMode: rulesetConfig.antiAdblockMode,
+            antiDevtoolsMode: rulesetConfig.antiDevtoolsMode,
+            unlockInteractionMode: rulesetConfig.unlockInteractionMode,
             firstRun: process.firstRun,
             isSideloaded,
             developerMode: rulesetConfig.developerMode,
@@ -477,6 +482,18 @@ async function onMessage(request, sender) {
         await setPopupBlockMode(request.state);
         await registerContentScripts();
         broadcastMessage({ popupBlockMode: rulesetConfig.popupBlockMode });
+        return;
+
+    case 'setAntiDevtoolsMode':
+        await setAntiDevtoolsMode(request.state);
+        await registerContentScripts();
+        broadcastMessage({ antiDevtoolsMode: rulesetConfig.antiDevtoolsMode });
+        return;
+
+    case 'setUnlockInteractionMode':
+        await setUnlockInteractionMode(request.state);
+        await registerContentScripts();
+        broadcastMessage({ unlockInteractionMode: rulesetConfig.unlockInteractionMode });
         return;
 
     case 'getTabStats':

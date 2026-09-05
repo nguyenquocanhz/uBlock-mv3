@@ -35,6 +35,8 @@ export const rulesetConfig = {
     strictBlockMode: webextFlavor !== 'safari',
     popupBlockMode: true,
     antiAdblockMode: true,
+    antiDevtoolsMode: true,
+    unlockInteractionMode: false,
     developerMode: false,
     hasBroadHostPermissions: true,
 };

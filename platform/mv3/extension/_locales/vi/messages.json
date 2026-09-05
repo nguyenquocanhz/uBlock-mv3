@@ -359,6 +359,22 @@
     "message": "Tiêm một hook vào mọi trang mà bạn đã cấp quyền, khiến các trang đo đạc khung quảng cáo bị ẩn không phát hiện được là nội dung đang bị chặn. Cần quyền truy cập tất cả trang web.",
     "description": "Settings: legend for the generic anti-adblock defuser"
   },
+  "enableAntiDevtoolsLabel": {
+    "message": "Vô hiệu hoá script chống công cụ nhà phát triển",
+    "description": "Settings: label for the anti-devtools defuser"
+  },
+  "enableAntiDevtoolsLegend": {
+    "message": "Vô hiệu hoá bẫy debugger làm treo công cụ nhà phát triển, và mẹo đo kích thước cửa sổ mà trang dùng để biết công cụ đang mở. Lưu ý: Chrome vốn không cho trang chặn F12, Ctrl+U hay view-source:.",
+    "description": "Settings: legend for the anti-devtools defuser"
+  },
+  "enableUnlockInteractionLabel": {
+    "message": "Khôi phục chuột phải, bôi đen và sao chép",
+    "description": "Settings: label for restoring right-click and selection"
+  },
+  "enableUnlockInteractionLegend": {
+    "message": "Ngăn trang tước đi menu chuột phải, khả năng bôi đen và sao chép. Mặc định tắt: chặn những thao tác đó cũng chính là cách ứng dụng tự dựng menu chuột phải hoặc hành vi sao chép riêng, nên bật lên có thể làm hỏng trang vốn đang chạy bình thường.",
+    "description": "Settings: legend for restoring right-click and selection"
+  },
   "sandboxEditorLabel": {
     "message": "Hộp thử nghiệm tạo bộ lọc",
     "description": "Header for filter-creation section in the dashboard"

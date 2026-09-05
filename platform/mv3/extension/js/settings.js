@@ -77,6 +77,13 @@ function renderWidgets() {
         dom.attr(input, 'disabled', canDefuse ? null : '');
     }
 
+    for ( const id of [ 'antiDevtoolsMode', 'unlockInteractionMode' ] ) {
+        const input = qs$(`#${id} input[type="checkbox"]`);
+        const usable = data.hasOmnipotence;
+        input.checked = usable && data[id] === true;
+        dom.attr(input, 'disabled', usable ? null : '');
+    }
+
     renderStats();
 
     {
@@ -238,6 +245,14 @@ dom.on('#antiAdblockMode input[type="checkbox"]', 'change', ev => {
     });
 });
 
+dom.on('#antiDevtoolsMode input[type="checkbox"]', 'change', ev => {
+    sendMessage({ what: 'setAntiDevtoolsMode', state: ev.target.checked });
+});
+
+dom.on('#unlockInteractionMode input[type="checkbox"]', 'change', ev => {
+    sendMessage({ what: 'setUnlockInteractionMode', state: ev.target.checked });
+});
+
 dom.on('#statsEnabled input[type="checkbox"]', 'change', async ev => {
     const want = ev.target.checked;
     // Chrome only grants an optional permission from a user gesture, and it
@@ -366,6 +381,13 @@ listen.onmessage = ev => {
             local.antiAdblockMode = message.antiAdblockMode;
             render = true;
         }
+    }
+
+    for ( const key of [ 'antiDevtoolsMode', 'unlockInteractionMode' ] ) {
+        if ( message[key] === undefined ) { continue; }
+        if ( message[key] === local[key] ) { continue; }
+        local[key] = message[key];
+        render = true;
     }
 
     if ( message.developerMode !== undefined ) {
