@@ -368,6 +368,170 @@ try {
 
 /******************************************************************************/
 
+// Detection by broken event: when a request is blocked the browser fires
+// `error` where the page expected `load`, and that flipped event *is* the
+// signal.
+//
+//   <script src="//pagead2.../ads.js" onerror="adblockDetected()">
+//   fetch('/ads.js').then(ok).catch(detected)
+//   xhr.addEventListener('error', detected)
+//
+// The measurement hooks above cannot help here: nothing is hidden, the
+// request simply never arrives. So the failure has to be turned back into
+// the success the page was waiting for -- but only for requests that are
+// recognisably ad or tracker traffic, otherwise a page's genuine error
+// handling breaks.
+
+const adUrlRe = /(?:^|[./])(?:doubleclick|googlesyndication|googletagservices|googletagmanager|google-analytics|adservice\.google|amazon-adsystem|adnxs|adsrvr|criteo|taboola|outbrain|scorecardresearch|moatads|pubmatic|rubiconproject|openx|smartadserver|zedo|adroll|quantserve|sharethrough|teads|indexww|casalemedia)\.|\/(?:ads?|adv|adserver|advert(?:s|ising|isement)?|adsense|adsbygoogle|banners?|pagead|prebid|popunder|sponsors?)(?:[-._/?]|$)/i;
+
+const isAdURL = url => {
+    if ( typeof url !== 'string' || url === '' ) { return false; }
+    try {
+        return adUrlRe.test(new URL(url, document.baseURI).href);
+    } catch {
+        return adUrlRe.test(url);
+    }
+};
+
+const isAdResourceElement = el => {
+    if ( el instanceof Element === false ) { return false; }
+    const name = el.localName;
+    if ( name !== 'script' && name !== 'img' && name !== 'iframe' && name !== 'link' ) {
+        return false;
+    }
+    if ( isBait(el) ) { return true; }
+    return isAdURL(el.getAttribute('src') || el.getAttribute('href') || '');
+};
+
+// Resource `error` events do not bubble, but they do travel through the
+// capture phase -- which is how error-reporting libraries see them, and how
+// we get ahead of the page's own handler. Stopping it during capture means
+// the listener on the element itself never runs.
+try {
+    self.addEventListener('error', ev => {
+        // Script runtime errors target the window; only resource loads are
+        // ours to rewrite.
+        if ( ev.target === self ) { return; }
+        if ( isAdResourceElement(ev.target) === false ) { return; }
+        ev.stopImmediatePropagation();
+        ev.preventDefault();
+        const el = ev.target;
+        setTimeout(( ) => {
+            try { el.dispatchEvent(new Event('load')); } catch {}
+        }, 0);
+    }, true);
+} catch {
+}
+
+// A blocked fetch rejects with a TypeError. Hand back an empty 200 instead,
+// so `.catch(detected)` never runs and `response.ok` holds.
+try {
+    const native = self.fetch;
+    if ( typeof native === 'function' ) {
+        const hooked = new Proxy(native, {
+            apply(target, thisArg, args) {
+                const promise = Reflect.apply(target, thisArg, args);
+                let url = '';
+                try {
+                    const a = args[0];
+                    url = typeof a === 'string'
+                        ? a
+                        : (a instanceof Request ? a.url : `${a}`);
+                } catch {
+                }
+                if ( isAdURL(url) === false ) { return promise; }
+                return promise.catch(reason => {
+                    // Only a network-level failure looks like blocking; let
+                    // aborts and programming errors through untouched.
+                    if ( reason instanceof TypeError === false ) { throw reason; }
+                    return new Response('', {
+                        status: 200,
+                        statusText: 'OK',
+                        headers: { 'Content-Type': 'text/plain' },
+                    });
+                });
+            },
+        });
+        markNative(hooked, native);
+        self.fetch = hooked;
+    }
+} catch {
+}
+
+// Same story for XMLHttpRequest: a blocked request fires `error`, which the
+// older detectors listen for. Convert it into a completed empty response.
+//
+// Suppressing that event means being the first `error` listener on the
+// object, because `stopImmediatePropagation()` only stops listeners
+// registered after ours -- and at the target phase, capture does not jump
+// the queue, registration order decides. Hooking `send()` is already too
+// late: the page has usually attached its handler between `open()` and
+// `send()`. So the listener goes on at construction time, which nothing on
+// the page can precede.
+//
+// The set of ad requests lives in a WeakSet rather than on the instance, so
+// the page cannot find the flag.
+try {
+    const adRequests = new WeakSet();
+    const nativeAddEventListener = XMLHttpRequest.prototype.addEventListener;
+
+    const swallow = function(ev) {
+        const xhr = ev.currentTarget;
+        if ( adRequests.has(xhr) === false ) { return; }
+        ev.stopImmediatePropagation();
+        ev.preventDefault();
+        // Own properties shadow the prototype getters, so the page reads a
+        // completed, empty, successful request.
+        try {
+            Object.defineProperties(xhr, {
+                readyState: { value: 4, configurable: true },
+                status: { value: 200, configurable: true },
+                statusText: { value: 'OK', configurable: true },
+                response: { value: '', configurable: true },
+                responseText: { value: '', configurable: true },
+            });
+        } catch {
+        }
+        for ( const type of [ 'readystatechange', 'load', 'loadend' ] ) {
+            try { xhr.dispatchEvent(new Event(type)); } catch {}
+        }
+    };
+
+    const nativeOpen = XMLHttpRequest.prototype.open;
+    const hookedOpen = new Proxy(nativeOpen, {
+        apply(target, thisArg, args) {
+            try {
+                if ( isAdURL(args[1]) ) {
+                    adRequests.add(thisArg);
+                } else {
+                    adRequests.delete(thisArg);
+                }
+            } catch {
+            }
+            return Reflect.apply(target, thisArg, args);
+        },
+    });
+    markNative(hookedOpen, nativeOpen);
+    XMLHttpRequest.prototype.open = hookedOpen;
+
+    const NativeXHR = self.XMLHttpRequest;
+    const HookedXHR = new Proxy(NativeXHR, {
+        construct(target, args, newTarget) {
+            const xhr = Reflect.construct(target, args, newTarget);
+            try {
+                nativeAddEventListener.call(xhr, 'error', swallow, true);
+            } catch {
+            }
+            return xhr;
+        },
+    });
+    markNative(HookedXHR, NativeXHR);
+    self.XMLHttpRequest = HookedXHR;
+} catch {
+}
+
+/******************************************************************************/
+
 // BlockAdblock ships an obfuscated payload through `eval()`. Same signature
 // matching as uBO's `prevent-bab` scriptlet.
 
