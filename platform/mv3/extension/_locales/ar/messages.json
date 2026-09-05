@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock Origin Lite",
+    "message": "Wren AdBlock Pro",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -12,8 +12,8 @@
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
-    "message": "uBO Lite — لوحة التحكم",
-    "description": "English: uBO Lite — Dashboard"
+    "message": "Wren AdBlock Pro — لوحة التحكم",
+    "description": "English: Wren AdBlock Pro — Dashboard"
   },
   "settingsPageName": {
     "message": "الإعدادات",
@@ -104,7 +104,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customListImportUserScriptsInfo": {
-    "message": "لفرض عوامل تصفية تجميلية أو برمجية من القوائم المستوردة، يجب عليك منح uBO Lite إذنًا لتشغيل البرامج النصية للمستخدم.",
+    "message": "لفرض عوامل تصفية تجميلية أو برمجية من القوائم المستوردة، يجب عليك منح Wren AdBlock Pro إذنًا لتشغيل البرامج النصية للمستخدم.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "customFiltersImportExportLabel": {
@@ -116,7 +116,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "لتطبيق مرشحات التجميل أو السكريبت من القوائم المستوردة، يجب منح uBO Lite إذنا لتشغيل نصوص المستخدم. افتح صفحة الإضافات في متصفحك (<code>chrome://extensions</code> في Chrome أو <code>about:addons</code> في Firefox)، ثم افتح تفاصيل </b>uBO Lite<b>، </b> وفعل خيار السماح بنصوص المستخدم <b> (المعروف أيضا بـ \"نصوص الطرف الثالث غير الموثقة\").",
+    "message": "لتطبيق مرشحات التجميل أو السكريبت من القوائم المستوردة، يجب منح Wren AdBlock Pro إذنا لتشغيل نصوص المستخدم. افتح صفحة الإضافات في متصفحك (<code>chrome://extensions</code> في Chrome أو <code>about:addons</code> في Firefox)، ثم افتح تفاصيل </b>Wren AdBlock Pro<b>، </b> وفعل خيار السماح بنصوص المستخدم <b> (المعروف أيضا بـ \"نصوص الطرف الثالث غير الموثقة\").",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
@@ -188,7 +188,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "يكتشف uBO Lite",
+    "message": "يكتشف Wren AdBlock Pro",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
@@ -196,7 +196,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "يحدث خلل وظيفي عندما يكون uBO Lite مفعلا",
+    "message": "يحدث خلل وظيفي عندما يكون Wren AdBlock Pro مفعلا",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
@@ -292,7 +292,7 @@
     "description": "Header for filter-creation section in the dashboard"
   },
   "sandboxEditorUserScriptsInfo": {
-    "message": "لفرض استخدام عوامل تصفية تجميلية أو برامج نصية من بيئة الاختبار المعزولة، يجب عليك منح uBO Lite إذنًا لتشغيل البرامج النصية للمستخدم.",
+    "message": "لفرض استخدام عوامل تصفية تجميلية أو برامج نصية من بيئة الاختبار المعزولة، يجب عليك منح Wren AdBlock Pro إذنًا لتشغيل البرامج النصية للمستخدم.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {
@@ -324,7 +324,7 @@
     "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
-    "message": "لقد منع uBO Lite تحميل الصفحة التالية:",
+    "message": "لقد منع Wren AdBlock Pro تحميل الصفحة التالية:",
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {

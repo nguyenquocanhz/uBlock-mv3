@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Wren AdBlock Pro</title>
+  <!--
+    Drawn for 16px first, where only four shapes survive: body, tail, beak,
+    eye.
+    - The tail is a broad wedge, not a taper: a taper reads as a tick mark
+      once it is a few pixels wide.
+    - It carries a background-coloured stroke and the body is painted over
+      it, so a hairline of background separates the two. Without that gap
+      the pair merges into one blob at small sizes.
+    - No wing. A cut-out wing was the loudest shape at 32px and pure noise
+      at 16px.
+  -->
+  <rect width="128" height="128" rx="28" fill="#14504F"/>
+
+  <!-- cocked tail, stroked in the background colour to hold it apart
+       from the body it sits behind -->
+  <path fill="#F7F5EF" stroke="#14504F" stroke-width="7" stroke-linejoin="round" d="
+    M 68 66
+    L 96 26
+    L 114 39
+    L 86 79
+    Z"/>
+
+  <!-- body and head, painted over the tail -->
+  <path fill="#F7F5EF" d="
+    M 24 62
+    C 24 44, 38 32, 55 33
+    C 71 34, 83 47, 83 64
+    C 83 83, 70 97, 52 97
+    C 36 97, 24 84, 24 70
+    Z"/>
+
+  <!-- beak -->
+  <path fill="#E8A33D" d="M 26 52 L 5 59 L 26 66 Z"/>
+
+  <!-- eye -->
+  <circle cx="43" cy="52" r="6" fill="#14504F"/>
+</svg>

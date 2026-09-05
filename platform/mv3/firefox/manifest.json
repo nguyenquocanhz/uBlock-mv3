@@ -8,14 +8,14 @@
     },
     "default_popup": "popup.html"
   },
-  "author": "Raymond Hill",
+  "author": "nguyenquocanhz",
   "background": {
     "scripts": [ "/js/background.js" ],
     "type": "module"
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "uBOLiteRedux@raymondhill.net",
+      "id": "wren-adblock-pro@nguyenquocanhz.dev",
       "strict_min_version": "128.0",
       "data_collection_permissions": {
         "required": [ "none" ]
@@ -65,7 +65,7 @@
     "storage",
     "unlimitedStorage"
   ],
-  "short_name": "uBO Lite",
+  "short_name": "Wren AdBlock",
   "version": "1.0",
   "web_accessible_resources": [
     {

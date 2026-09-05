@@ -7,7 +7,7 @@
     },
     "default_popup": "popup.html"
   },
-  "author": "Raymond Hill",
+  "author": "nguyenquocanhz",
   "background": {
       "service_worker": "/js/background.js",
       "type": "module"
@@ -50,7 +50,7 @@
     "unlimitedStorage",
     "userScripts"
   ],
-  "short_name": "uBO Lite",
+  "short_name": "Wren AdBlock",
   "storage": {
     "managed_schema": "managed_storage.json"
   },
