@@ -13,10 +13,9 @@
 }
 
 :root {
-    --popup-min-width: calc(
-        var(--filtering-mode-slider-width) +
-        var(--filtering-mode-button-size) / 2
-    );
+    --popup-min-width: 320px;
+    --mode-control-padding: 3px;
+    --mode-control-radius: 9px;
 }
 
 :root body,
@@ -93,9 +92,6 @@ hr {
     font-weight: 600;
 }
 
-body[data-forbid~="filteringMode"] .filteringModeSlider {
-    pointer-events: none;
-}
 body[data-forbid~="zapper"] #gotoZapper,
 body[data-forbid~="picker"] #gotoPicker,
 body[data-forbid~="picker"] #gotoUnpicker,
@@ -107,31 +103,97 @@ body[data-forbid~="dashboard"] .globalTools {
     display: none;
 }
 
-#filteringModeText {
-    color: var(--ink-3);
-    margin-bottom: var(--popup-gap-thin);
-    text-align: center;
-    text-transform: lowercase;
+/* Filtering mode: a labelled segmented control.
+
+   The old slider showed four unlabelled bars and a draggable knob, so the
+   only way to learn what a position meant was to move it and read the
+   caption underneath. Each level is now a button carrying its own name.
+   The dashboard still uses the slider as a static illustration of each
+   mode -- that is what filtering-mode.css remains for. */
+
+#filteringModeControl {
+    align-self: stretch;
+    background-color: var(--surface-2);
+    border-radius: var(--mode-control-radius);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: var(--popup-gap) var(--popup-gap) var(--popup-gap-thin);
+    padding: var(--mode-control-padding);
+    position: relative;
 }
-#filteringModeText > span {
-    color: var(--accent-surface-1);
-}
-#filteringModeText > span:nth-of-type(2) {
-    display: none;
-}
-#filteringModeText > span:nth-of-type(2):not(:empty) {
-    display: inline;
-}
-#filteringModeText > span:nth-of-type(2):not(:empty)::before {
-    content: '\2002\2192\2002';
-}
-[dir="rtl"] #filteringModeText > span:nth-of-type(2):not(:empty)::before {
-    content: '\2002\2190\2002';
+body[data-forbid~="filteringMode"] #filteringModeControl {
+    opacity: 0.5;
+    pointer-events: none;
 }
 
-.filteringModeSlider {
-    align-self: center;
-    margin: var(--popup-gap) 0;
+#modeIndicator {
+    background-color: var(--accent-surface-1);
+    border-radius: calc(var(--mode-control-radius) - var(--mode-control-padding));
+    inset-block: var(--mode-control-padding);
+    inset-inline-start: var(--mode-control-padding);
+    position: absolute;
+    transform: translateX(calc(var(--mode-index, 0) * 100%));
+    transition: transform 160ms cubic-bezier(0.2, 0, 0, 1);
+    width: calc((100% - 2 * var(--mode-control-padding)) / 4);
+    z-index: 0;
+}
+[dir="rtl"] #modeIndicator {
+    transform: translateX(calc(var(--mode-index, 0) * -100%));
+}
+#filteringModeControl[data-level="0"] { --mode-index: 0; }
+#filteringModeControl[data-level="1"] { --mode-index: 1; }
+#filteringModeControl[data-level="2"] { --mode-index: 2; }
+#filteringModeControl[data-level="3"] { --mode-index: 3; }
+
+/* Level 0 is "off", not a fourth degree of protection -- neutral fill. */
+#filteringModeControl[data-level="0"] #modeIndicator {
+    background-color: var(--surface-3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #modeIndicator { transition: none; }
+}
+
+.modeOption {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    border-radius: calc(var(--mode-control-radius) - var(--mode-control-padding));
+    color: var(--ink-3);
+    cursor: pointer;
+    font: inherit;
+    font-size: 90%;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+    padding: 0.5em 0.25em;
+    position: relative;
+    text-transform: lowercase;
+    z-index: 1;
+}
+.modeOption:hover {
+    color: var(--ink-1);
+}
+.modeOption[aria-checked="true"] {
+    color: var(--accent-ink-1);
+    font-weight: 600;
+}
+#filteringModeControl[data-level="0"] .modeOption[aria-checked="true"] {
+    color: var(--ink-1);
+}
+.modeOption:focus-visible {
+    outline: 2px solid var(--accent-surface-1);
+    outline-offset: 2px;
+}
+
+/* Reserves two lines so swapping between descriptions of different length
+   does not make the panel jump. */
+#filteringModeText {
+    color: var(--ink-3);
+    font-size: 90%;
+    line-height: 1.35;
+    margin: 0 var(--popup-gap) var(--popup-gap-thin);
+    min-height: calc(2 * 1.35 * 0.9 * var(--font-size));
+    text-align: center;
 }
 
 body.needReload #refresh {

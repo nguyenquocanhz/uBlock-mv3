@@ -43,6 +43,10 @@
     "message": "chế độ lọc",
     "description": "Label in the popup panel for the current filtering mode"
   },
+  "popupNoFilteringDescription": {
+    "message": "Không lọc gì trên trang web này.",
+    "description": "Popup: one-line summary of the \"no filtering\" mode"
+  },
   "popupLocalToolsLabel": {
     "message": "Trên trang web này",
     "description": "Label in the popup panel for the local tools section"

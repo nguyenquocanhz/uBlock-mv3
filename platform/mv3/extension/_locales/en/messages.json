@@ -43,6 +43,10 @@
     "message": "filtering mode",
     "description": "Label in the popup panel for the current filtering mode"
   },
+  "popupNoFilteringDescription": {
+    "message": "No filtering on this website.",
+    "description": "Popup: one-line summary of the \"no filtering\" mode"
+  },
   "popupLocalToolsLabel": {
     "message": "On this website",
     "description": "Label in the popup panel for the local tools section"
