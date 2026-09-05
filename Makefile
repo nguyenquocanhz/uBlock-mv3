@@ -70,25 +70,25 @@ dist/build/mv3-data:
 ubol-codemirror:
 	$(MAKE) -sC platform/mv3/extension/lib/codemirror/codemirror-ubol/ ubol.bundle
 
-dist/build/uBOLite.chromium: tools/make-mv3.sh $(mv3-sources) $(platform) $(mv3-data) dist/build/mv3-data
+dist/build/WrenAdBlockPro.chromium: tools/make-mv3.sh $(mv3-sources) $(platform) $(mv3-data) dist/build/mv3-data
 	tools/make-mv3.sh chromium
 
-mv3-chromium: ubol-codemirror dist/build/uBOLite.chromium
+mv3-chromium: ubol-codemirror dist/build/WrenAdBlockPro.chromium
 
-dist/build/uBOLite.firefox: tools/make-mv3.sh $(mv3-sources) $(platform) $(mv3-data) dist/build/mv3-data
+dist/build/WrenAdBlockPro.firefox: tools/make-mv3.sh $(mv3-sources) $(platform) $(mv3-data) dist/build/mv3-data
 	tools/make-mv3.sh firefox
 
-mv3-firefox: ubol-codemirror dist/build/uBOLite.firefox
+mv3-firefox: ubol-codemirror dist/build/WrenAdBlockPro.firefox
 
-dist/build/uBOLite.edge: tools/make-mv3.sh $(mv3-sources) $(mv3-edge-deps) $(mv3-data) dist/build/mv3-data
+dist/build/WrenAdBlockPro.edge: tools/make-mv3.sh $(mv3-sources) $(mv3-edge-deps) $(mv3-data) dist/build/mv3-data
 	tools/make-mv3.sh edge
 
-mv3-edge: ubol-codemirror dist/build/uBOLite.edge
+mv3-edge: ubol-codemirror dist/build/WrenAdBlockPro.edge
 
-dist/build/uBOLite.safari: tools/make-mv3.sh $(mv3-sources) $(mv3-safari-deps) $(mv3-data) dist/build/mv3-data
+dist/build/WrenAdBlockPro.safari: tools/make-mv3.sh $(mv3-sources) $(mv3-safari-deps) $(mv3-data) dist/build/mv3-data
 	tools/make-mv3.sh safari
 
-mv3-safari: ubol-codemirror dist/build/uBOLite.safari
+mv3-safari: ubol-codemirror dist/build/WrenAdBlockPro.safari
 
 dist/build/uAssets:
 	tools/pull-assets.sh
