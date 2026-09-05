@@ -57,8 +57,8 @@ export const MODE_COMPLETE = 3;
 export const defaultFilteringModes = {
     none: [],
     basic: [],
-    optimal: [ 'all-urls' ],
-    complete: [],
+    optimal: [],
+    complete: [ 'all-urls' ],
 };
 
 /******************************************************************************/
@@ -372,7 +372,7 @@ export async function syncWithBrowserPermissions() {
         await setDefaultFilteringMode(MODE_BASIC);
         modified = true;
     } else if ( beforeMode === MODE_BASIC && hasBroadHostPermissions && broadHostPermissionsToggled ) {
-        await setDefaultFilteringMode(MODE_OPTIMAL);
+        await setDefaultFilteringMode(MODE_COMPLETE);
         modified = true;
     }
     if ( broadHostPermissionsToggled ) {
@@ -394,7 +394,7 @@ export async function syncWithBrowserPermissions() {
             if ( beforeAllowedHostnames.has(hn) ) { continue; }
             if ( optimal.has(hn) || complete.has(hn) ) { continue; }
             if ( basic.has(hn) || none.has(hn) ) { continue; }
-            applyFilteringMode(filteringModes, hn, MODE_OPTIMAL);
+            applyFilteringMode(filteringModes, hn, MODE_COMPLETE);
             modified = true;
         }
         if ( modified ) {
