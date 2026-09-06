@@ -166,7 +166,20 @@ for ( const name of [ 'setInterval', 'setTimeout' ] ) {
 // to be that -- a genuine gap of a few pixels is just the browser's own
 // chrome, and pages do legitimately read these values for layout.
 
-const DEVTOOLS_GAP = 100;
+// Thresholds are per axis, because the gap a browser has without any panel
+// open is nothing like the same on the two:
+//
+//   width  outer - inner is 0..16 -- a scrollbar and a window border
+//   height outer - inner is 90..160 -- tab strip, omnibox, bookmarks bar
+//
+// A single threshold of 100 fired on the height of every ordinary window.
+// And what it substituted made things worse: reporting outerHeight exactly
+// equal to innerHeight is something no real browser does, so the page was
+// handed a signature that reads as an automated one. Bot detection notices.
+const DEVTOOLS_GAP = { outerWidth: 150, outerHeight: 250 };
+
+// Substituting must leave a plausible window behind, not a suspicious one.
+const CHROME_GAP = { outerWidth: 0, outerHeight: 120 };
 
 const hookGeometry = (prop, innerProp) => {
     try {
@@ -184,8 +197,8 @@ const hookGeometry = (prop, innerProp) => {
                 // docked panel -- substituting would hand layout code a
                 // zero it never asked for.
                 if ( inner <= 0 ) { return outer; }
-                if ( outer - inner < DEVTOOLS_GAP ) { return outer; }
-                return inner;
+                if ( outer - inner < DEVTOOLS_GAP[prop] ) { return outer; }
+                return inner + CHROME_GAP[prop];
             },
         });
         markNative(get, native);
