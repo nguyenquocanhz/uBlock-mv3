@@ -35,7 +35,13 @@ export const rulesetConfig = {
     strictBlockMode: webextFlavor !== 'safari',
     popupBlockMode: true,
     antiAdblockMode: true,
-    antiDevtoolsMode: true,
+    // Off by default. It is the most invasive thing here: to neutralise a
+    // debugger trap it has to replace Function, eval, setTimeout and
+    // setInterval with proxies, on every page. A browser whose intrinsics
+    // have been swapped out is what bot detection looks for, and most people
+    // never meet a page that fights the developer tools. Those who do can
+    // turn it on.
+    antiDevtoolsMode: false,
     unlockInteractionMode: false,
     dismissWallMode: true,
     developerMode: false,
