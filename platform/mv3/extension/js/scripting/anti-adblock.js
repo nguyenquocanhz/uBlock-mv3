@@ -245,6 +245,25 @@ const fakeStyle = new Map([
     [ 'maxWidth', 'none' ],
 ]);
 
+// This used to wrap the declaration in a Proxy, which covered both ways a
+// detector reads it -- `style.display` and `style.getPropertyValue('display')`
+// -- but a Proxy is not a CSSStyleDeclaration as far as the browser is
+// concerned. Any code doing
+//
+//   CSSStyleDeclaration.prototype.getPropertyValue.call(style, 'color')
+//
+// which is how libraries routinely call native methods on an object handed to
+// them, got "Uncaught TypeError: Illegal invocation". Breaking arbitrary page
+// scripts is not worth closing one detection route.
+//
+// So the method is shadowed on the instance instead. That leaves a real
+// CSSStyleDeclaration in the caller's hands and cannot throw. The cost is
+// that plain `style.display` still reports the truth: computed styles are
+// read-only, so Chrome refuses to let a CSS property be redefined on them
+// (NoModificationAllowedError), and there is no accessor on the prototype to
+// hook either. The measurement hooks above remain the defence against that
+// route.
+
 try {
     const native = self.getComputedStyle;
     const hooked = new Proxy(native, {
@@ -255,31 +274,19 @@ try {
                     return style;
                 }
                 if ( isBait(args[0]) === false ) { return style; }
+                const nativeGet = style.getPropertyValue.bind(style);
+                Object.defineProperty(style, 'getPropertyValue', {
+                    configurable: true,
+                    writable: true,
+                    value: function getPropertyValue(name) {
+                        const key = `${name}`;
+                        if ( fakeStyle.has(key) ) { return fakeStyle.get(key); }
+                        return nativeGet(name);
+                    },
+                });
             } catch {
-                return style;
             }
-            return new Proxy(style, {
-                get(target, prop) {
-                    if ( typeof prop === 'string' ) {
-                        if ( fakeStyle.has(prop) ) {
-                            return fakeStyle.get(prop);
-                        }
-                        if ( prop === 'getPropertyValue' ) {
-                            return function getPropertyValue(name) {
-                                const key = `${name}`;
-                                if ( fakeStyle.has(key) ) {
-                                    return fakeStyle.get(key);
-                                }
-                                return target.getPropertyValue(name);
-                            };
-                        }
-                    }
-                    // Methods must be bound to the genuine declaration,
-                    // otherwise the browser throws on an illegal invocation.
-                    const v = Reflect.get(target, prop, target);
-                    return typeof v === 'function' ? v.bind(target) : v;
-                },
-            });
+            return style;
         },
     });
     markNative(hooked, native);
@@ -554,6 +561,15 @@ try {
     });
     markNative(HookedXHR, NativeXHR);
     self.XMLHttpRequest = HookedXHR;
+    // Without this, XMLHttpRequest.prototype.constructor still points at the
+    // native constructor while window.XMLHttpRequest is the proxy. The two
+    // are equal in every untouched browser, so the mismatch is a one-line
+    // check for anything fingerprinting the page.
+    Object.defineProperty(NativeXHR.prototype, 'constructor', {
+        value: HookedXHR,
+        writable: true,
+        configurable: true,
+    });
 } catch {
 }
 

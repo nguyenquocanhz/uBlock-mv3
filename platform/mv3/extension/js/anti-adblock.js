@@ -20,7 +20,7 @@
 */
 
 import { rulesetConfig, saveRulesetConfig } from './config.js';
-import { matchesFromHostnames } from './utils.js';
+import { matchesFromHostnames, sensitiveOriginMatches } from './utils.js';
 
 /******************************************************************************/
 
@@ -65,9 +65,10 @@ export async function registerAntiAdblock(context) {
         runAt: 'document_start',
         world: 'MAIN',
     };
-    if ( excludeMatches.length !== 0 ) {
-        directive.excludeMatches = matchesFromHostnames(excludeMatches);
-    }
+    directive.excludeMatches = [
+        ...matchesFromHostnames(excludeMatches),
+        ...sensitiveOriginMatches,
+    ];
 
     context.toAdd.push(directive);
 }

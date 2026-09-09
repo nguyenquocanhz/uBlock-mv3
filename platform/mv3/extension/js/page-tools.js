@@ -20,7 +20,7 @@
 */
 
 import { rulesetConfig, saveRulesetConfig } from './config.js';
-import { matchesFromHostnames } from './utils.js';
+import { matchesFromHostnames, sensitiveOriginMatches } from './utils.js';
 
 /******************************************************************************/
 
@@ -53,9 +53,10 @@ function register(context, id, file, options = {}) {
         runAt: options.runAt || 'document_start',
         world: options.world || 'MAIN',
     };
-    if ( excludeMatches.length !== 0 ) {
-        directive.excludeMatches = matchesFromHostnames(excludeMatches);
-    }
+    directive.excludeMatches = [
+        ...matchesFromHostnames(excludeMatches),
+        ...sensitiveOriginMatches,
+    ];
     context.toAdd.push(directive);
 }
 

@@ -100,6 +100,32 @@ export const subtractHostnameIters = (itera, iterb) => {
 
 /******************************************************************************/
 
+// Origins where a modified-looking JavaScript environment costs the user
+// more than the defusers gain them.
+//
+// The MAIN-world hooks replace Function, eval, setTimeout, fetch,
+// XMLHttpRequest and Function.prototype.toString with proxies on every page.
+// That is exactly what bot detection looks for, and on a sign-in or CAPTCHA
+// page the result is being told to prove you are human. A network-level ad
+// blocker never touches these, which is why one does not provoke it.
+//
+// Nothing here needs the defusers anyway: these pages do not run adblock
+// detection, and their ads -- where they have any -- are handled by the
+// declarative rules like everywhere else.
+export const sensitiveOriginMatches = [
+    // Google search and sign-in, where the "unusual traffic" check appears
+    '*://*.google.com/*',
+    '*://*.google.com.vn/*',
+    '*://*.google.vn/*',
+    '*://*.gstatic.com/*',
+    // CAPTCHA providers, wherever they are embedded
+    '*://*.recaptcha.net/*',
+    '*://*.hcaptcha.com/*',
+    '*://challenges.cloudflare.com/*',
+    '*://*.arkoselabs.com/*',
+    '*://*.funcaptcha.com/*',
+];
+
 export const matchFromHostname = hn =>
     hn === '*' || hn === 'all-urls' ? '<all_urls>' : `*://*.${hn}/*`;
 
