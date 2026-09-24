@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wren AdBlock Pro</title>
+<meta name="description" content="Wren AdBlock Pro — trình chặn quảng cáo MV3 cho Edge và Brave. Bản {{VERSION}}.">
+<link rel="icon" href="data:image/svg+xml,{{LOGO_URI}}">
+<style>
+:root {
+  --bg: #f6f5f1;
+  --surface: #ffffff;
+  --ink: #1b2422;
+  --ink-2: #4a5754;
+  --ink-3: #6f7c79;
+  --line: #e3e0d8;
+  --brand: #14504f;
+  --brand-ink: #f7f5ef;
+  --accent: #c7801f;
+  --code-bg: #f0eee7;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111615;
+    --surface: #182120;
+    --ink: #e6ebe9;
+    --ink-2: #b3bfbc;
+    --ink-3: #8a9794;
+    --line: #283331;
+    --brand: #5fb3a8;
+    --brand-ink: #0d1413;
+    --accent: #e8a33d;
+    --code-bg: #0d1413;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+.wrap { max-width: 760px; margin: 0 auto; padding: 48px 20px 72px; }
+header { display: flex; align-items: center; gap: 18px; margin-bottom: 36px; }
+header svg { width: 64px; height: 64px; flex: none; }
+h1 { font-size: 30px; line-height: 1.15; margin: 0; letter-spacing: -0.01em; }
+.tag { color: var(--ink-3); margin: 4px 0 0; }
+h2 { font-size: 19px; margin: 44px 0 12px; }
+p { margin: 0 0 12px; color: var(--ink-2); }
+a { color: var(--brand); }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 22px;
+}
+.release { display: grid; gap: 18px; }
+.meta { display: grid; grid-template-columns: max-content 1fr; gap: 6px 18px; font-size: 14px; }
+.meta dt { color: var(--ink-3); }
+.meta dd { margin: 0; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 16px; border-radius: 8px;
+  font-weight: 600; font-size: 15px; text-decoration: none;
+  border: 1px solid var(--line); color: var(--ink); background: var(--bg);
+}
+.btn.primary { background: var(--brand); color: var(--brand-ink); border-color: var(--brand); }
+.btn small { font-weight: 400; opacity: 0.75; }
+
+ol.steps { margin: 0; padding-left: 20px; color: var(--ink-2); }
+ol.steps li { margin: 6px 0; }
+code, pre { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: 13.5px; }
+code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+pre {
+  background: var(--code-bg); border: 1px solid var(--line); border-radius: 8px;
+  padding: 14px 16px; overflow-x: auto; margin: 10px 0 14px; line-height: 1.5;
+}
+pre code { background: none; padding: 0; }
+
+.note {
+  border-left: 3px solid var(--accent);
+  padding: 10px 14px; margin: 14px 0;
+  background: var(--surface); border-radius: 0 8px 8px 0;
+  color: var(--ink-2); font-size: 15px;
+}
+.note strong { color: var(--ink); }
+footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--ink-3); font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  {{LOGO_SVG}}
+  <div>
+    <h1>Wren AdBlock Pro</h1>
+    <p class="tag">Trình chặn quảng cáo Manifest V3 cho Edge và Brave</p>
+  </div>
+</header>
+
+<section class="card release">
+  <dl class="meta">
+    <dt>Phiên bản</dt><dd>{{VERSION}}</dd>
+    <dt>Phát hành</dt><dd>{{DATE}} · <a href="{{RELEASE_URL}}">{{TAG}}</a></dd>
+    <dt>Extension ID</dt><dd><code>{{EXT_ID}}</code></dd>
+  </dl>
+  <div class="buttons">
+    <a class="btn primary" href="{{ZIP_URL}}">Tải bản .zip <small>để load unpacked</small></a>
+    <a class="btn" href="{{CRX_URL}}">Tải .crx <small>cho cài qua policy</small></a>
+  </div>
+</section>
+
+<h2>Cách 1 — Load unpacked</h2>
+<p>Đơn giản nhất, không cần quyền quản trị. Bản cài theo cách này <strong>không tự cập nhật</strong>: mỗi bản mới phải tải và nạp lại.</p>
+<ol class="steps">
+  <li>Tải bản <code>.zip</code> ở trên và giải nén ra một thư mục cố định.</li>
+  <li>Mở <code>edge://extensions</code> hoặc <code>brave://extensions</code>.</li>
+  <li>Bật <strong>Developer mode</strong>, chọn <strong>Load unpacked</strong>, trỏ vào thư mục vừa giải nén.</li>
+</ol>
+
+<h2>Cách 2 — Cài qua policy, tự cập nhật</h2>
+<p>Trình duyệt sẽ tự tải bản mới mỗi khi trang này công bố phiên bản mới. Chạy trong PowerShell với quyền <strong>Administrator</strong>, rồi khởi động lại trình duyệt:</p>
+<pre><code>$entry = '{{EXT_ID}};{{UPDATE_URL}}'
+foreach ($k in 'HKLM:\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist',
+              'HKLM:\SOFTWARE\Policies\BraveSoftware\Brave\ExtensionInstallForcelist') {
+  if (-not (Test-Path $k)) { New-Item -Path $k -Force | Out-Null }
+  $existing = (Get-Item $k).Property | ForEach-Object { (Get-ItemProperty $k).$_ }
+  if ($existing -notcontains $entry) {
+    $n = 1; while ((Get-Item $k).Property -contains "$n") { $n++ }
+    New-ItemProperty -Path $k -Name "$n" -Value $entry -PropertyType String | Out-Null
+  }
+}</code></pre>
+<p>Lệnh chỉ <em>thêm</em> một mục, không xoá các extension bạn đã cấu hình sẵn bằng policy. Để gỡ:</p>
+<pre><code>$entry = '{{EXT_ID}};{{UPDATE_URL}}'
+foreach ($k in 'HKLM:\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist',
+              'HKLM:\SOFTWARE\Policies\BraveSoftware\Brave\ExtensionInstallForcelist') {
+  if (Test-Path $k) {
+    (Get-Item $k).Property | Where-Object { (Get-ItemProperty $k).$_ -eq $entry } |
+      ForEach-Object { Remove-ItemProperty -Path $k -Name $_ }
+  }
+}</code></pre>
+<div class="note">
+  <strong>Chỉ chạy lệnh này trên máy của chính bạn.</strong> Extension cài qua policy
+  không gỡ được từ giao diện trình duyệt, và trình duyệt sẽ hiện dòng
+  "Managed by your organization". Đó là hành vi bình thường của policy.
+</div>
+
+<h2>Vì sao không kéo thả file .crx?</h2>
+<p>Edge và Brave, như mọi trình duyệt Chromium, từ chối file <code>.crx</code> không đến từ store chính thức, và trang web đã mất quyền tự cài extension từ Chrome 71. Hai cách ở trên là hai đường cài được thật sự ngoài store.</p>
+
+<h2>Mã nguồn</h2>
+<p>Wren AdBlock Pro là bản fork của <a href="https://github.com/gorhill/uBlock">uBlock Origin Lite</a> — Copyright © Raymond Hill, phát hành theo GPLv3. Mã nguồn của chính bản này nằm tại <a href="{{REPO_URL}}">{{REPO_URL}}</a>.</p>
+
+<footer>
+  Bản cập nhật cho trình duyệt: <a href="{{UPDATE_URL}}">update.xml</a>
+</footer>
+
+</div>
+</body>
+</html>

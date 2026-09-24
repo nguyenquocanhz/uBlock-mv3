@@ -1,6 +1,10 @@
 // Package a built extension directory as a signed .crx (CRX3).
 //
-//   node tools/make-crx.cjs <extensionDir> <output.crx> [privateKey.pem]
+//   node tools/make-crx.cjs <package.zip> <output.crx> [privateKey.pem] [--codebase=URL]
+//
+// --codebase is where the .crx will be downloadable from; it goes into the
+// update.xml written next to the .crx. Without it the manifest carries a
+// placeholder and is only good as a template.
 //
 // The key is generated on first run and reused afterwards, because the
 // extension's ID is derived from the public key: lose the key and every
@@ -41,9 +45,18 @@ const uint32le = n => {
 
 /* ---- key ---------------------------------------------------------------- */
 
-const loadOrCreateKey = keyPath => {
+const loadOrCreateKey = (keyPath, allowNew) => {
     if ( fs.existsSync(keyPath) ) {
         return crypto.createPrivateKey(fs.readFileSync(keyPath));
+    }
+    // Minting a key silently is how an extension loses its identity: a wrong
+    // path -- easy to produce when a shell and node disagree about what /c/
+    // means -- would sign with a fresh key, and every installed copy would stop
+    // recognising the update. So a new key has to be asked for.
+    if ( allowNew !== true ) {
+        process.stderr.write(`make-crx: no signing key at ${keyPath}\n`);
+        process.stderr.write(`make-crx: pass --new-key to create one (this changes the extension id)\n`);
+        process.exit(1);
     }
     const { privateKey } = crypto.generateKeyPairSync('rsa', { modulusLength: 2048 });
     fs.mkdirSync(path.dirname(keyPath), { recursive: true });
@@ -65,9 +78,16 @@ const extensionId = derPublicKey => {
 
 /* ---- main --------------------------------------------------------------- */
 
-const zipPath = path.resolve(process.argv[2]);
-const outPath = path.resolve(process.argv[3]);
-const keyPath = path.resolve(process.argv[4] || path.join(path.dirname(outPath), 'wren-adblock-pro.pem'));
+const flags = new Map();
+const positional = [];
+for ( const a of process.argv.slice(2) ) {
+    const m = /^--([\w-]+)(?:=(.*))?$/.exec(a);
+    if ( m ) { flags.set(m[1], m[2] ?? ''); } else { positional.push(a); }
+}
+const zipPath = path.resolve(positional[0]);
+const outPath = path.resolve(positional[1]);
+const keyPath = path.resolve(positional[2] || path.join(path.dirname(outPath), 'wren-adblock-pro.pem'));
+const codebase = flags.get('codebase') || `https://example.invalid/${path.basename(outPath)}`;
 
 if ( fs.existsSync(zipPath) === false ) {
     process.stderr.write(`make-crx: no such file: ${zipPath}\n`);
@@ -75,7 +95,7 @@ if ( fs.existsSync(zipPath) === false ) {
 }
 
 const zip = fs.readFileSync(zipPath);
-const privateKey = loadOrCreateKey(keyPath);
+const privateKey = loadOrCreateKey(keyPath, flags.has('new-key'));
 const publicKeyDer = crypto.createPublicKey(privateKey).export({ type: 'spki', format: 'der' });
 const id = extensionId(publicKeyDer);
 
@@ -133,7 +153,7 @@ const updateXml = [
     `<?xml version='1.0' encoding='UTF-8'?>`,
     `<gupdate xmlns='http://www.google.com/update2/response' protocol='2.0'>`,
     `  <app appid='${id}'>`,
-    `    <updatecheck codebase='https://example.invalid/${path.basename(outPath)}' version='${manifestVersion || '0'}' />`,
+    `    <updatecheck codebase='${codebase}' version='${manifestVersion || '0'}' />`,
     `  </app>`,
     `</gupdate>`,
     ``,
@@ -148,4 +168,5 @@ process.stdout.write(JSON.stringify({
     version: manifestVersion,
     key: keyPath,
     updateManifest: updatePath,
+    codebase,
 }, null, 2) + '\n');
