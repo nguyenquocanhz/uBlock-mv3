@@ -585,7 +585,10 @@ async function processDnrRules(assetDetails, network, dnrRules) {
     const minimizedRegexRuleset = minimizeRuleset(regexRules);
     log(`\tMaybe good regexes (raw/minimized): ${regexRules.length}/${minimizedRegexRuleset.length}`);
 
-    staticRules.forEach(rule => {
+    // Regex rules redirect too. A redirect to a resource the package does not
+    // ship is not a no-op: Chrome rejects the rule and reports a load error
+    // against the whole ruleset.
+    staticRules.concat(regexRules).forEach(rule => {
         if ( rule.action.redirect?.extensionPath === undefined ) { return; }
         requiredRedirectResources.add(
             rule.action.redirect.extensionPath.replace(/^\/+/, '')

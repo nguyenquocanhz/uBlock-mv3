@@ -5,6 +5,9 @@
     "group": "default",
     "enabled": true,
     "trusted": true,
+    "filters": [
+      "||admicro1.vcmedia.vn^"
+    ],
     "urls": [
       "https://ublockorigin.github.io/uAssets/filters/quick-fixes.min.txt",
       "https://ublockorigin.github.io/uAssets/filters/unbreak.min.txt",
@@ -647,7 +650,13 @@
     "lang": "vi",
     "name": "🇻🇳vn: ABPVN List",
     "tags": "ads vietnamese việt",
-    "enabled": false,
+    "enabled": true,
+    "filters": [
+      "@@||dantri.com.vn$generichide,badfilter",
+      "@@||laodong.vn$generichide,badfilter",
+      "@@||securepubads.g.doubleclick.net^$script,domain=laodong.vn,badfilter",
+      "||pagead2.googlesyndication.com^$domain=laodong.vn,important"
+    ],
     "urls": [
       "https://raw.githubusercontent.com/abpvn/abpvn/master/filter/abpvn_ublock.txt"
     ],

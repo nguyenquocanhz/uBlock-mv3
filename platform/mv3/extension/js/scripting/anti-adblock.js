@@ -407,7 +407,7 @@ try {
 
 const adNetworkRe = /(?:^|\.)(?:doubleclick|googlesyndication|googletagservices|googletagmanager|google-analytics|adservice\.google|fundingchoicesmessages\.google|amazon-adsystem|adnxs|adsrvr|criteo|taboola|outbrain|scorecardresearch|moatads|pubmatic|rubiconproject|openx|openxcdn|smartadserver|zedo|adroll|quantserve|sharethrough|teads|indexww|casalemedia|creativecdn|crwdcntrl|admicro|amcdn|eclick|dtadnetwork|adtima|adtimaserver|zascdn|aiservice|contineljs|philacct|ants|novanet)\.[a-z.]{2,8}$/i;
 
-const adHostLabelRe = /(?:^|[.-])(?:ad|ads|adp|adv|adx|adm|cads|adserver|adservice|adsystem|adtech|adnet|adnetwork|pagead|pagead2|securepubads|pubads|banner|banners|prebid|quangcao)(?:[.-]|$)/i;
+const adHostLabelRe = /(?:^|[.-])(?:ad|ads|adp|adv|adx|adm|cads|adserver|adservice|adsystem|adtech|adnet|adnetwork|pagead|pagead2|securepubads|pubads|banner|banners|prebid|quangcao|adtima|admicro\d*)(?:[.-]|$)/i;
 
 const adPathRe = /\/(?:ads?|adv|adserver|advert(?:s|ising|isement)?|adsense|adsbygoogle|banners?|pagead|prebid|popunder|sponsors?)(?:[-._/?]|$)/i;
 
