@@ -1,0 +1,5 @@
+# sourced by the wrappers
+SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[1]}")" && pwd)"
+CLEAN_PATH="$(printf '%s' "$PATH" | tr ':' '\n' | grep -vxF "$SELF_DIR" | paste -sd: -)"
+REAL_NODE="$(PATH="$CLEAN_PATH" command -v node)"
+[ -n "$REAL_NODE" ] || { echo "$(basename "$0"): node not found on PATH" >&2; exit 127; }

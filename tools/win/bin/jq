@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -u
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$HERE/_realnode"
+args=()
+for a in "$@"; do
+    if [[ "$a" == /* ]] && [ -e "$a" ]; then args+=("$(cygpath -w "$a")"); else args+=("$a"); fi
+done
+exec "$REAL_NODE" "$(cygpath -w "$HERE/../jq.cjs")" "${args[@]}"

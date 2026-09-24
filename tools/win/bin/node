@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Bridges Git Bash paths to the Windows node binary. make-mv3.sh passes POSIX
+# paths (output=/d/uBlock/dist/...), which node.exe resolves against the wrong
+# drive. Any argument that is, or ends with, an existing POSIX absolute path is
+# converted; everything else is passed through untouched.
+set -u
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/_realnode"
+args=()
+for a in "$@"; do
+    pre=""; val="$a"
+    if [[ "$a" == *=/* ]]; then pre="${a%%=*}="; val="${a#*=}"; fi
+    if [[ "$val" == /* ]] && [ -e "$val" ]; then
+        args+=("$pre$(cygpath -w "$val")")
+    else
+        args+=("$a")
+    fi
+done
+exec "$REAL_NODE" "${args[@]}"

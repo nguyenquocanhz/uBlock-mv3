@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# make-mv3.sh invokes:  zip <archive>.zip -qr ./*
+# The flags are ignored; the current directory is archived whole.
+set -u
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$HERE/_realnode"
+out=""
+for a in "$@"; do
+    case "$a" in -*) ;; *) [ -z "$out" ] && out="$a" ;; esac
+done
+[ -n "$out" ] || { echo "zip: no archive name given" >&2; exit 2; }
+# Build outside the tree being archived so it cannot swallow a partial copy.
+tmp="$(mktemp -u).zip"
+"$REAL_NODE" "$(cygpath -w "$HERE/../zip.cjs")" "$(cygpath -w "$PWD")" "$(cygpath -w "$tmp")" || exit 1
+mv "$tmp" "$out"
