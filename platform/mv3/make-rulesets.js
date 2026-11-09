@@ -120,23 +120,51 @@ const logProgress = text => {
 
 /******************************************************************************/
 
+// How long a downloaded filter list may be reused before the build fetches
+// it again. The cache used to be kept forever, which is how this fork shipped
+// 5 September's YouTube rules into November: every build after the first read
+// the same files back. YouTube's countermeasures change weekly and uBO answers
+// within days, so a baked-in list is only as good as its download date.
+// Override with UBOL_LIST_MAX_AGE_HOURS; 0 always refetches.
+const listMaxAgeHours = (( ) => {
+    const v = Number(process.env.UBOL_LIST_MAX_AGE_HOURS);
+    return Number.isFinite(v) && v >= 0 ? v : 6;
+})();
+
+// Returns { content, ageHours } for a cache file, or undefined if absent.
+async function readCache(file) {
+    const content = await fs.readFile(file, { encoding: 'utf8' }).catch(( ) => { });
+    if ( content === undefined ) { return; }
+    const stat = await fs.stat(file).catch(( ) => { });
+    const ageHours = stat ? (Date.now() - stat.mtimeMs) / 3600000 : Infinity;
+    return { content, ageHours };
+}
+
+// A stale list is better than no list, but it must never be silent again.
+function warnStale(what, ageHours) {
+    const msg = `WARNING: could not refresh ${what}; using a cached copy ${Math.round(ageHours)}h old`;
+    log(`\t${msg}`);
+    process.stderr.write(`\n${msg}\n`);
+}
+
 async function fetchText(url, cacheDir) {
     logProgress(`Reading locally cached ${path.basename(url)}`);
     const fname = url
         .replace(/^https?:\/\//, '')
         .replace(/\//g, '_');(url);
-    const content = await fs.readFile(
-        `${cacheDir}/${fname}`,
-        { encoding: 'utf8' }
-    ).catch(( ) => { });
-    if ( content !== undefined ) {
-        log(`\tFetched local ${url}`);
-        return { url, content };
+    const cached = await readCache(`${cacheDir}/${fname}`);
+    if ( cached !== undefined && cached.ageHours < listMaxAgeHours ) {
+        log(`\tFetched local ${url} (${cached.ageHours.toFixed(1)}h old)`);
+        return { url, content: cached.content };
     }
     logProgress(`Fetching remote ${path.basename(url)}`);
     log(`\tFetching remote ${url}`);
     const response = await fetch(url).catch(( ) => { });
     if ( response === undefined ) {
+        if ( cached !== undefined ) {
+            warnStale(url, cached.ageHours);
+            return { url, content: cached.content };
+        }
         return { url, error: `Fetching failed: ${url}` };
     }
     let text;
@@ -146,6 +174,10 @@ async function fetchText(url, cacheDir) {
         text = await fallbackFetchText(url).catch(( ) => { });
     }
     if ( text === undefined ) {
+        if ( cached !== undefined ) {
+            warnStale(url, cached.ageHours);
+            return { url, content: cached.content };
+        }
         return { url, error: `Fetching text content failed: ${url}` };
     }
     writeFile(`${cacheDir}/${fname}`, text);
@@ -256,12 +288,10 @@ async function fetchListFromCache(assetDetails) {
     const fname = assetDetails.id;
     logProgress(`Reading locally cached ${platform}/${fname}`);
 
-    const content = await fs.readFile(`${cacheDir}/${platform}/${fname}`,
-        { encoding: 'utf8' }
-    ).catch(( ) => { });
-    if ( content !== undefined ) {
-        log(`\tFetched local ${fname}`);
-        return content;
+    const cached = await readCache(`${cacheDir}/${platform}/${fname}`);
+    if ( cached !== undefined && cached.ageHours < listMaxAgeHours ) {
+        log(`\tFetched local ${fname} (${cached.ageHours.toFixed(1)}h old)`);
+        return cached.content;
     }
 
     const context = {
@@ -271,11 +301,15 @@ async function fetchListFromCache(assetDetails) {
     };
 
     const text = await fetchList(context, assetDetails);
-    writeFile(`${cacheDir}/${platform}/${fname}`, text);
-
     if ( Boolean(text) === false ) {
+        if ( cached !== undefined ) {
+            warnStale(fname, cached.ageHours);
+            return cached.content;
+        }
         throw 'Filter list should not be empty';
     }
+    log(`\tFetched remote ${fname}`);
+    writeFile(`${cacheDir}/${platform}/${fname}`, text);
 
     return text;
 }
