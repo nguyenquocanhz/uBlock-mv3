@@ -43,6 +43,8 @@ export const rulesetConfig = {
     // turn it on.
     antiDevtoolsMode: false,
     unlockInteractionMode: false,
+    // Off by default: the only feature that contacts a third party.
+    sponsorBlockMode: false,
     dismissWallMode: true,
     developerMode: false,
     hasBroadHostPermissions: true,

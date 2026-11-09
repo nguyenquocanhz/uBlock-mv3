@@ -387,6 +387,34 @@
     "message": "Ngăn trang tước đi menu chuột phải, khả năng bôi đen và sao chép. Mặc định tắt: chặn những thao tác đó cũng chính là cách ứng dụng tự dựng menu chuột phải hoặc hành vi sao chép riêng, nên bật lên có thể làm hỏng trang vốn đang chạy bình thường.",
     "description": "Settings: legend for restoring right-click and selection"
   },
+  "enableSponsorBlockLabel": {
+    "message": "Bỏ qua đoạn quảng cáo nhà tài trợ trong video YouTube",
+    "description": "SponsorBlock: enableSponsorBlockLabel"
+  },
+  "enableSponsorBlockLegend": {
+    "message": "Tự tua qua đoạn quảng cáo mà nhà sáng tạo đọc ngay trong video, thứ mà không trình chặn quảng cáo nào gỡ được, dựa trên mốc thời gian do cộng đồng SponsorBlock đánh dấu. Để tra cứu, chỉ 4 ký tự đầu của mã băm ID video được gửi tới sponsor.ajay.app; máy chủ trả lời cho hàng chục video cùng lúc nên không biết bạn đang xem video nào. Dữ liệu: SponsorBlock, CC BY-NC-SA 4.0.",
+    "description": "SponsorBlock: enableSponsorBlockLegend"
+  },
+  "sponsorBlockSkipped": {
+    "message": "Đã bỏ qua:",
+    "description": "SponsorBlock: sponsorBlockSkipped"
+  },
+  "sponsorBlockUndo": {
+    "message": "Hoàn tác",
+    "description": "SponsorBlock: sponsorBlockUndo"
+  },
+  "sponsorBlockCategory_sponsor": {
+    "message": "nhà tài trợ",
+    "description": "SponsorBlock: sponsorBlockCategory_sponsor"
+  },
+  "sponsorBlockCategory_selfpromo": {
+    "message": "tự quảng bá",
+    "description": "SponsorBlock: sponsorBlockCategory_selfpromo"
+  },
+  "sponsorBlockCategory_interaction": {
+    "message": "nhắc đăng ký",
+    "description": "SponsorBlock: sponsorBlockCategory_interaction"
+  },
   "sandboxEditorLabel": {
     "message": "Hộp thử nghiệm tạo bộ lọc",
     "description": "Header for filter-creation section in the dashboard"

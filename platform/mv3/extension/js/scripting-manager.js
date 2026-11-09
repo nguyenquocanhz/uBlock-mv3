@@ -36,6 +36,7 @@ import { registerCustomFilters } from './filter-manager.js';
 import { registerJob } from './alarms.js';
 import { registerAntiAdblock } from './anti-adblock.js';
 import { registerAntiDevtools, registerDismissWall, registerUnlockInteraction } from './page-tools.js';
+import { registerSponsorBlock } from './sponsorblock.js';
 import { registerPreventPopup } from './prevent-popup.js';
 import { registerToolbarIconToggler } from './action.js';
 
@@ -339,6 +340,7 @@ registerContentScripts.register = async function register() {
         registerAntiAdblock(context),
         registerAntiDevtools(context),
         registerDismissWall(context),
+        registerSponsorBlock(context),
         registerUnlockInteraction(context),
         registerToolbarIconToggler(context),
     ]);

@@ -146,6 +146,7 @@ import {
 
 import { setAntiAdblockMode } from './anti-adblock.js';
 import { setAntiDevtoolsMode, setDismissWallMode, setUnlockInteractionMode } from './page-tools.js';
+import { getSponsorSegments, setSponsorBlockMode } from './sponsorblock.js';
 import { setPopupBlockMode } from './prevent-popup.js';
 import { supportsOffscreenDocument } from './ext-offscreen.js';
 import { toggleToolbarIcon } from './action.js';
@@ -423,6 +424,7 @@ async function onMessage(request, sender) {
             popupBlockMode: defaultConfig.popupBlockMode,
             antiAdblockMode: defaultConfig.antiAdblockMode,
             antiDevtoolsMode: defaultConfig.antiDevtoolsMode,
+            sponsorBlockMode: defaultConfig.sponsorBlockMode,
             dismissWallMode: defaultConfig.dismissWallMode,
             unlockInteractionMode: defaultConfig.unlockInteractionMode,
             rulesets,
@@ -464,6 +466,7 @@ async function onMessage(request, sender) {
             popupBlockMode: rulesetConfig.popupBlockMode,
             antiAdblockMode: rulesetConfig.antiAdblockMode,
             antiDevtoolsMode: rulesetConfig.antiDevtoolsMode,
+            sponsorBlockMode: rulesetConfig.sponsorBlockMode,
             dismissWallMode: rulesetConfig.dismissWallMode,
             unlockInteractionMode: rulesetConfig.unlockInteractionMode,
             firstRun: process.firstRun,
@@ -518,6 +521,15 @@ async function onMessage(request, sender) {
         await setPopupBlockMode(request.state);
         await registerContentScripts();
         broadcastMessage({ popupBlockMode: rulesetConfig.popupBlockMode });
+        return;
+
+    case 'sponsorSegments':
+        return getSponsorSegments(request.videoId);
+
+    case 'setSponsorBlockMode':
+        await setSponsorBlockMode(request.state);
+        await registerContentScripts();
+        broadcastMessage({ sponsorBlockMode: rulesetConfig.sponsorBlockMode });
         return;
 
     case 'setAntiDevtoolsMode':
