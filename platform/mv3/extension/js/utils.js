@@ -118,6 +118,17 @@ export const sensitiveOriginMatches = [
     '*://*.google.com.vn/*',
     '*://*.google.vn/*',
     '*://*.gstatic.com/*',
+    // YouTube, for the same reason and one more. It runs Google's BotGuard
+    // attestation before playback, so a patched Function.prototype.toString
+    // or a proxied fetch is a reason to withhold the stream -- the "sign in
+    // to confirm you're not a bot" failure. And its ads are not something a
+    // generic heuristic can reach anyway: they arrive inside the player
+    // response, from the same hosts as the video, and are removed by uBO's
+    // own YouTube scriptlets in the ublock-filters ruleset, which are
+    // unaffected by this list. Covers embedded players on other sites too,
+    // since injection is decided per frame.
+    '*://*.youtube.com/*',
+    '*://*.youtube-nocookie.com/*',
     // CAPTCHA providers, wherever they are embedded
     '*://*.recaptcha.net/*',
     '*://*.hcaptcha.com/*',

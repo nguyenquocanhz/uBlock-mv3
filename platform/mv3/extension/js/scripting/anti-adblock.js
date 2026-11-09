@@ -139,6 +139,31 @@ const isBait = el => {
     return false;
 };
 
+// Bait the filters have actually hidden, as opposed to any element whose name
+// happens to contain an ad token. A cosmetic filter hides with display:none,
+// and an element under display:none generates no box at all, so it has no
+// client rects. That is the signal; a zero on one axis is not.
+//
+// YouTube made the difference concrete. Its join button (#sponsor-button)
+// measures 42 x 0, the ad markers on the progress bar (.ytp-ad-progress-list)
+// 76 x 0, the sidebar ad slot (#player-ads) 320 x 0 -- all real, rendered,
+// and named like bait. Answering their zero with a 300 x 250 banner fed
+// invented sizes into the player's own layout code.
+//
+// getClientRects is never hooked here, so calling it from inside a hooked
+// getter cannot recurse.
+const nativeGetClientRects = Element.prototype.getClientRects;
+
+const isHiddenBait = el => {
+    if ( isBait(el) === false ) { return false; }
+    try {
+        if ( el.isConnected !== true ) { return false; }
+        return nativeGetClientRects.call(el).length === 0;
+    } catch {
+    }
+    return false;
+};
+
 /******************************************************************************/
 
 // A blocked ad slot reports zero. Report a plausible banner instead, but only
@@ -157,7 +182,7 @@ const hookZeroDimension = (proto, prop, fake) => {
             apply(target, thisArg, args) {
                 const r = Reflect.apply(target, thisArg, args);
                 if ( r !== 0 ) { return r; }
-                return isBait(thisArg) ? fake : r;
+                return isHiddenBait(thisArg) ? fake : r;
             },
         });
         markNative(get, native);
@@ -190,7 +215,7 @@ try {
             apply(target, thisArg, args) {
                 const r = Reflect.apply(target, thisArg, args);
                 if ( r !== null ) { return r; }
-                if ( isBait(thisArg) === false ) { return r; }
+                if ( isHiddenBait(thisArg) === false ) { return r; }
                 try {
                     if ( thisArg.isConnected !== true ) { return r; }
                     return thisArg.parentElement || document.body || r;
@@ -218,7 +243,7 @@ try {
         apply(target, thisArg, args) {
             const r = Reflect.apply(target, thisArg, args);
             if ( r.width !== 0 || r.height !== 0 ) { return r; }
-            if ( isBait(thisArg) === false ) { return r; }
+            if ( isHiddenBait(thisArg) === false ) { return r; }
             return new DOMRect(r.x, r.y, FAKE_WIDTH, FAKE_HEIGHT);
         },
     });
@@ -273,7 +298,7 @@ try {
                 if ( style.display !== 'none' && style.visibility !== 'hidden' ) {
                     return style;
                 }
-                if ( isBait(args[0]) === false ) { return style; }
+                if ( isHiddenBait(args[0]) === false ) { return style; }
                 const nativeGet = style.getPropertyValue.bind(style);
                 Object.defineProperty(style, 'getPropertyValue', {
                     configurable: true,
