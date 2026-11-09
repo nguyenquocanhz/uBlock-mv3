@@ -46,7 +46,7 @@
     "128": "img/icon_128.png"
   },
   "manifest_version": 3,
-  "name": "uBO Lite",
+  "name": "Wren AdBlock Pro",
   "options_ui": {
       "open_in_tab": true,
       "page": "dashboard.html"

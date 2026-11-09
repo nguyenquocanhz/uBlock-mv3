@@ -63,6 +63,10 @@
     "message": "Ka yar",
     "description": "Label to be used to hide popup panel sections"
   },
+  "popupNoWebsite": {
+    "message": "not a website",
+    "description": "Used when popup panel is opened for a local web page"
+  },
   "3pGroupDefault": {
     "message": "Goobjoog",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -116,7 +120,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "Si loo dhaqan geliyo shaandhooyinka qurxinta ama qoraal-yar ee liisaska la soo dejiyay, waa inaad siisaa Wren AdBlock Pro ogolaansho si ay u waddo qoraallada isticmaalaha. Fur bogga kordhinta biraawsarkaaga (<code>chrome://extensions</code> Chrome ama <code>about:addons</code> Firefox), fur faahfaahinta <b>Wren AdBlock Pro</b>, oo daawo <b>Oggolow qoraallada isticmaalaha</b> (oo sidoo kale loo yaqaan “qoraallada dhinac-saddexaad ee aan la xaqiijin”).",
+    "message": "Fur bogga kordhinta biraawsarkaaga (<code>chrome://extensions</code> Chrome ama <code>about:addons</code> Firefox), fur faahfaahinta <b>Wren AdBlock Pro</b>, oo daawo <b>Oggolow qoraallada isticmaalaha</b> (oo sidoo kale loo yaqaan “qoraallada dhinac-saddexaad ee aan la xaqiijin”).",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {

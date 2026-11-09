@@ -63,6 +63,10 @@
     "message": "Pungua",
     "description": "Label to be used to hide popup panel sections"
   },
+  "popupNoWebsite": {
+    "message": "not a website",
+    "description": "Used when popup panel is opened for a local web page"
+  },
   "3pGroupDefault": {
     "message": "Chaguo-msingi",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -116,7 +120,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "Ili kutekeleza vichujio vya urembo au scriptlet kutoka kwenye orodha zilizoingizwa, lazima uipe Wren AdBlock Pro ruhusa ya kuendesha hati za mtumiaji. Fungua ukurasa wa viendelezi vya kivinjari chako (<code>chrome://extensions</code> kwenye Chrome au <code>about:addons</code> kwenye Firefox), fungua maelezo ya <b>Wren AdBlock Pro</b>, na washa <b>Ruhusu hati za mtumiaji</b> (pia hujulikana kama \"hati zisizoidhinishwa za watu wengine\").",
+    "message": "Fungua ukurasa wa viendelezi vya kivinjari chako (<code>chrome://extensions</code> kwenye Chrome au <code>about:addons</code> kwenye Firefox), fungua maelezo ya <b>Wren AdBlock Pro</b>, na washa <b>Ruhusu hati za mtumiaji</b> (pia hujulikana kama \"hati zisizoidhinishwa za watu wengine\").",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {

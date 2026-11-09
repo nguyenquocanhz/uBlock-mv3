@@ -63,6 +63,10 @@
     "message": "Mens",
     "description": "Label to be used to hide popup panel sections"
   },
+  "popupNoWebsite": {
+    "message": "not a website",
+    "description": "Used when popup panel is opened for a local web page"
+  },
   "3pGroupDefault": {
     "message": "Per defaut",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -116,7 +120,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "Per aplicar los filtres cosmetics o scriptlets de las listas importadas, deuatz acordar la permission a Wren AdBlock Pro d'executar d'scripts utilizaire. Dobrissètz la pagina de las extensions de vòstre navigador (<code>chrome://extensions</code> dins Chrome o <code>about:addons</code> dins Firefox), dobrissètz los detalhs de <b>Wren AdBlock Pro</b>, e activatz <b>Permetre los scripts utilizaire</b> (tanben nomenats “scripts tèrces pas verificats”).",
+    "message": "Dobrissètz la pagina de las extensions de vòstre navigador (<code>chrome://extensions</code> dins Chrome o <code>about:addons</code> dins Firefox), dobrissètz los detalhs de <b>Wren AdBlock Pro</b>, e activatz <b>Permetre los scripts utilizaire</b> (tanben nomenats “scripts tèrces pas verificats”).",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {

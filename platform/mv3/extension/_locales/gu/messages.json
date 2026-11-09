@@ -63,6 +63,10 @@
     "message": "ઓછું",
     "description": "Label to be used to hide popup panel sections"
   },
+  "popupNoWebsite": {
+    "message": "not a website",
+    "description": "Used when popup panel is opened for a local web page"
+  },
   "3pGroupDefault": {
     "message": "મૂળભૂત",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -116,7 +120,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "આયાત કરેલ યાદીઓમાંથી કોસ્મેટિક અથવા સ્ક્રિપ્ટલેટ ફિલ્ટરો લાગુ કરવા માટે, તમારે Wren AdBlock Pro ને વપરાશકર્તા સ્ક્રિપ્ટો ચલાવવાની પરવાનગી આપવી આવશ્યક છે. તમારા બ્રાઉઝરનું એક્સ્ટેંશન પેજ ખોલો (Chrome માં <code>chrome://extensions</code> અથવા Firefox માં <code>about:addons</code>), <b>Wren AdBlock Pro</b> વિગતો ખોલો, અને <b>વપરાશકર્તા સ્ક્રિપ્ટોને મંજૂરી આપો</b> (જેને “અવેરિફાઇડ તૃતીય-પક્ષ સ્ક્રિપ્ટો” તરીકે પણ ઓળખવામાં આવે છે) ચાલુ કરો.",
+    "message": "તમારા બ્રાઉઝરનું એક્સ્ટેંશન પેજ ખોલો (Chrome માં <code>chrome://extensions</code> અથવા Firefox માં <code>about:addons</code>), <b>Wren AdBlock Pro</b> વિગતો ખોલો, અને <b>વપરાશકર્તા સ્ક્રિપ્ટોને મંજૂરી આપો</b> (જેને “અવેરિફાઇડ તૃતીય-પક્ષ સ્ક્રિપ્ટો” તરીકે પણ ઓળખવામાં આવે છે) ચાલુ કરો.",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {

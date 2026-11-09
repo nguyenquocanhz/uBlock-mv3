@@ -63,6 +63,10 @@
     "message": "მოკლედ",
     "description": "Label to be used to hide popup panel sections"
   },
+  "popupNoWebsite": {
+    "message": "არაა ვებსაიტი",
+    "description": "Used when popup panel is opened for a local web page"
+  },
   "3pGroupDefault": {
     "message": "ნაგულისხმევი",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -116,7 +120,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "გარეგნული ან მცირე სკრიპტის ფილტრების იძულებით ასამოქმედებლად შემოტანილი სიებიდან, Wren AdBlock Pro უნდა იყოს სკრიპტების გაშვების ნებართვის მქონე. გახსენით ბრაუზერის გაფართოებების გვერდი (<code>chrome://extensions</code> Chrome-ში ან <code>about:addons</code> Firefox-ში), იხილეთ <b>Wren AdBlock Pro</b> ვრცლად და გადართეთ <b>მომხმარებლის სკრიპტების ნებართვა</b> (აგრეთვე შეიძლება ეწეროს „დაუმოწმებელი გარეშე სკრიპტები“).",
+    "message": "გახსენით ბრაუზერის გაფართოებების გვერდი (<code>chrome://extensions</code> Chrome-ში ან <code>about:addons</code> Firefox-ში), იხილეთ <b>Wren AdBlock Pro</b> ვრცლად და გადართეთ <b>მომხმარებლის სკრიპტების ნებართვა</b> (აგრეთვე შეიძლება ეწეროს „დაუმოწმებელი გარეშე სკრიპტები“).",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {

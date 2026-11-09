@@ -63,6 +63,10 @@
     "message": "കുറവ്",
     "description": "Label to be used to hide popup panel sections"
   },
+  "popupNoWebsite": {
+    "message": "not a website",
+    "description": "Used when popup panel is opened for a local web page"
+  },
   "3pGroupDefault": {
     "message": "സ്ഥിരസ്ഥിതി",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -116,7 +120,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "ഇറക്കുമതി ചെയ്ത ലിസ്റ്റുകളിൽ നിന്നുള്ള കോസ്മെറ്റിക് അല്ലെങ്കിൽ സ്ക്രിപ്റ്റ്ലെറ്റ് ഫിൽറ്ററുകൾ നടപ്പിലാക്കാൻ, യൂസർ സ്ക്രിപ്റ്റുകൾ പ്രവർത്തിപ്പിക്കാനുള്ള അനുമതി Wren AdBlock Pro-ന് നിങ്ങൾ നൽകണം. നിങ്ങളുടെ ബ്രൗസറിന്റെ എക്സ്റ്റൻഷനുകൾ പേജ് തുറക്കുക (Chrome-ൽ <code>chrome://extensions</code> അല്ലെങ്കിൽ Firefox-ൽ <code>about:addons</code>), <b>Wren AdBlock Pro</b> വിശദാംശങ്ങൾ തുറക്കുക, <b>യൂസർ സ്ക്രിപ്റ്റുകൾ അനുവദിക്കുക</b> (മറ്റൊരു വിധത്തിൽ “പരിശോധിക്കാത്ത മൂന്നാം കക്ഷി സ്ക്രിപ്റ്റുകൾ” എന്നും അറിയപ്പെടുന്നു) ടോഗിൾ ഓണാക്കുക.",
+    "message": "നിങ്ങളുടെ ബ്രൗസറിന്റെ എക്സ്റ്റൻഷനുകൾ പേജ് തുറക്കുക (Chrome-ൽ <code>chrome://extensions</code> അല്ലെങ്കിൽ Firefox-ൽ <code>about:addons</code>), <b>Wren AdBlock Pro</b> വിശദാംശങ്ങൾ തുറക്കുക, <b>യൂസർ സ്ക്രിപ്റ്റുകൾ അനുവദിക്കുക</b> (മറ്റൊരു വിധത്തിൽ “പരിശോധിക്കാത്ത മൂന്നാം കക്ഷി സ്ക്രിപ്റ്റുകൾ” എന്നും അറിയപ്പെടുന്നു) ടോഗിൾ ഓണാക്കുക.",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {

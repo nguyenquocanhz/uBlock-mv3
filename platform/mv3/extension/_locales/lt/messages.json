@@ -63,6 +63,10 @@
     "message": "Mažiau",
     "description": "Label to be used to hide popup panel sections"
   },
+  "popupNoWebsite": {
+    "message": "not a website",
+    "description": "Used when popup panel is opened for a local web page"
+  },
   "3pGroupDefault": {
     "message": "Numatytasis",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -116,7 +120,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "Kad galėtumėte taikyti kosmetinius ar scenarijų filtrus iš importuotų sąrašų, turite suteikti Wren AdBlock Pro leidimą vykdyti vartotojo scenarijus. Atidarykite naršyklės plėtinių puslapį (<code>chrome://extensions</code> sistemoje Chrome arba <code>about:addons</code> sistemoje Firefox), atidarykite <b>Wren AdBlock Pro</b> išsamią informaciją ir įjunkite <b>Leisti vartotojo scenarijus</b> (taip pat vadinama „nepatikrintais trečiųjų šalių scenarijais“).",
+    "message": "Atidarykite naršyklės plėtinių puslapį (<code>chrome://extensions</code> sistemoje Chrome arba <code>about:addons</code> sistemoje Firefox), atidarykite <b>Wren AdBlock Pro</b> išsamią informaciją ir įjunkite <b>Leisti vartotojo scenarijus</b> (taip pat vadinama „nepatikrintais trečiųjų šalių scenarijais“).",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {

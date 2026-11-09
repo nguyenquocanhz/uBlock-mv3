@@ -63,6 +63,10 @@
     "message": "Daha Az",
     "description": "Label to be used to hide popup panel sections"
   },
+  "popupNoWebsite": {
+    "message": "web sitesi değil",
+    "description": "Used when popup panel is opened for a local web page"
+  },
   "3pGroupDefault": {
     "message": "Varsayılan",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -116,7 +120,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "İçeri aktarılmış listelerdeki kozmetik veya kod filtrelerini uygulamak için Wren AdBlock Pro'a kullanıcı komut dosyalarını çalıştırma izni vermeniz gerekir. İzni vermek için tarayıcınızın uzantılar sayfasını açın (Chrome için:<code>chrome://extensions</code> Firefox için:<code>about:addons</code>), <b>Wren AdBlock Pro</b>'ın ayrıntılar sayfasına tıklayın ve <b>Kullanıcı komut dosyalarına izin ver</b> seçeneğine tıklayın (\"doğrulanmamış 3. parti komutlar\" olarak da adlandırılabilir).",
+    "message": "Tarayıcınızın uzantılar sayfasını açın (Chrome için:<code>chrome://extensions</code> Firefox için:<code>about:addons</code>), <b>Wren AdBlock Pro</b>'ın ayrıntılar sayfasına tıklayın ve <b>Kullanıcı komut dosyalarına izin ver</b> seçeneğine tıklayın (\"doğrulanmamış 3. parti komutlar\" olarak da adlandırılabilir).",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {

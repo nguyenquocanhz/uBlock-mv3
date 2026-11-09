@@ -63,6 +63,10 @@
     "message": "Kurangkan",
     "description": "Label to be used to hide popup panel sections"
   },
+  "popupNoWebsite": {
+    "message": "not a website",
+    "description": "Used when popup panel is opened for a local web page"
+  },
   "3pGroupDefault": {
     "message": "Lalai",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -116,7 +120,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "Untuk menguatkuasakan penapis kosmetik atau scriptlet daripada senarai yang diimport, anda mesti memberikan kebenaran kepada Wren AdBlock Pro untuk menjalankan skrip pengguna. Buka halaman sambungan pelayar anda (<code>chrome://extensions</code> dalam Chrome atau <code>about:addons</code> dalam Firefox), buka butiran <b>Wren AdBlock Pro</b>, dan aktifkan <b>Benarkan skrip pengguna</b> (juga dirujuk sebagai \"skrip pihak ketiga yang tidak disahkan\").",
+    "message": "Buka halaman sambungan pelayar anda (<code>chrome://extensions</code> dalam Chrome atau <code>about:addons</code> dalam Firefox), buka butiran <b>Wren AdBlock Pro</b>, dan aktifkan <b>Benarkan skrip pengguna</b> (juga dirujuk sebagai \"skrip pihak ketiga yang tidak disahkan\").",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {

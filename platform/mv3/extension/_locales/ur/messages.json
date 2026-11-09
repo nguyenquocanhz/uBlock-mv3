@@ -63,6 +63,10 @@
     "message": "کم",
     "description": "Label to be used to hide popup panel sections"
   },
+  "popupNoWebsite": {
+    "message": "not a website",
+    "description": "Used when popup panel is opened for a local web page"
+  },
   "3pGroupDefault": {
     "message": "طے شدہ",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -116,7 +120,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "درآمد شدہ فہرستوں سے کاسمیٹک یا اسکرپٹلیٹ فلٹرز کو نافذ کرنے کے لیے، آپ کو Wren AdBlock Pro کو صارف اسکرپٹس چلانے کی اجازت دینی ہوگی۔ اپنے براؤزر کے ایکسٹینشنز پیج (<code>chrome://extensions</code> Chrome میں یا <code>about:addons</code> Firefox میں) کو کھولیں، <b>Wren AdBlock Pro</b> کی تفصیلات کھولیں، اور <b>Allow user scripts</b> کو آن کریں (جسے “unverified third-party scripts” بھی کہا جاتا ہے)۔",
+    "message": "اپنے براؤزر کے ایکسٹینشنز پیج (<code>chrome://extensions</code> Chrome میں یا <code>about:addons</code> Firefox میں) کو کھولیں، <b>Wren AdBlock Pro</b> کی تفصیلات کھولیں، اور <b>Allow user scripts</b> کو آن کریں (جسے “unverified third-party scripts” بھی کہا جاتا ہے)۔",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {

@@ -71,8 +71,9 @@ body.busy aside {
     animation-fill-mode: forwards;
     display: block;
 }
-hr {
-    margin: 0.5em 0;
+
+body.nodata .needData {
+    visibility: hidden;
 }
 
 #hostname {
@@ -100,6 +101,12 @@ body[data-forbid~="zapper"][data-forbid~="picker"][data-forbid~="report"] .local
     display: none;
 }
 body[data-forbid~="dashboard"] .globalTools {
+    display: none;
+}
+
+/* From upstream 610c243: no element picker on a site that is not being
+   filtered. Ported from the slider's selector to the segmented control. */
+#filteringModeControl[data-level="0"] ~ .localTools > *:is(#gotoPicker,#gotoUnpicker) {
     display: none;
 }
 

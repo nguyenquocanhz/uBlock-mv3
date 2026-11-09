@@ -63,6 +63,10 @@
     "message": "更少",
     "description": "Label to be used to hide popup panel sections"
   },
+  "popupNoWebsite": {
+    "message": "不是一个网站",
+    "description": "Used when popup panel is opened for a local web page"
+  },
   "3pGroupDefault": {
     "message": "默认",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -104,7 +108,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customListImportUserScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant Wren AdBlock Pro permission to run user scripts.",
+    "message": "要强制执行从导入列表中获取的 cosmetic 或 scriptlet 过滤规则，你必须授予 Wren AdBlock Pro 运行用户脚本的权限。",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "customFiltersImportExportLabel": {
@@ -116,7 +120,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "要强制执行来自导入列表的元素或脚本过滤规则，您必须授予 Wren AdBlock Pro 运行用户脚本的权限。打开浏览器的扩展页面（Chrome 中为 <code>chrome://extensions</code>，Firefox 中为 <code>about:addons</code>），打开 <b>Wren AdBlock Pro</b> 详情</b>，然后开启 <b>允许用户脚本</b>（也称为“未经验证的第三方脚本”）。",
+    "message": "打开浏览器的扩展页面（Chrome 中为 <code>chrome://extensions</code>，Firefox 中为 <code>about:addons</code>），打开 <b>Wren AdBlock Pro</b> 详情</b>，然后开启 <b>允许用户脚本</b>（也称为“未经验证的第三方脚本”）。",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
@@ -292,7 +296,7 @@
     "description": "Header for filter-creation section in the dashboard"
   },
   "sandboxEditorUserScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant Wren AdBlock Pro permission to run user scripts.",
+    "message": "要强制执行从沙箱中获取的 cosmetic 或 scriptlet 过滤规则，你必须授予 Wren AdBlock Pro 运行用户脚本的权限。",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {
